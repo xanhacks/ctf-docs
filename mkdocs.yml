@@ -1,0 +1,46 @@
+site_name: CTF Docs
+theme:
+  name: material
+  favicon: assets/img/favicon.ico
+  logo: assets/img/favicon.ico
+  icon:
+    repo: fontawesome/brands/gitlab
+  palette:
+    - scheme: default
+      primary: black
+      accent: red
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to dark mode
+    - scheme: slate
+      primary: black
+      accent: red
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to light mode
+
+repo_url: https://gitlab.com/xanhacks/ctf-docs
+repo_name: xanhacks/ctf-docs
+
+extra:
+  homepage: https://docs.xanhacks.xyz
+  social:
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/xanhacks
+    - icon: fontawesome/brands/gitlab
+      link: https://gitlab.com/xanhacks
+    - icon: fontawesome/solid/globe
+      link: https://xanhacks.xyz
+
+
+markdown_extensions:
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - meta
+  - admonition
+
+extra_javascript:
+  - https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js
+  - assets/js/config.js
+extra_css:
+  - https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/default.min.css
