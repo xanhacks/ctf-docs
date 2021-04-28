@@ -14,4 +14,4 @@ In this website, you will find awesome **cheatsheets** about tools I use during 
 
 ## Whoami
 
-A french student passionate about infosec.
+French student passionate about infosec.
