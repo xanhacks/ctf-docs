@@ -1,4 +1,3 @@
-
 ---
 title: Calling a function with args
 description: Exploiting a buffer overflow to call a function with specific arguments.
@@ -72,6 +71,8 @@ int main(int argc, char **argv){
 $ file vuln
 vuln: ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=f2f6cce698b62f5109de9955c0ea0ab832ea967c, not stripped
 ```
+
+The goal of this challenge is to call the "win" function with the two arguments, *0xDEADBEEF* and *0xDEADC0DE*. As you have probably noticed, the *vuln* function is vulnerable to a buffer overflow attack which allows us to rewrite *EIP* and thus call the *win* function. We can pass it the two required arguments using the stack as we are in 32 bits.
 
 ```python linenums="1"
 #!/usr/bin/env python3
