@@ -44,6 +44,10 @@ PIE (Position Independent Executable) allows a program to be relocated, just lik
 
 Address space layout randomization (ASLR) is a computer security technique involved in preventing exploitation of memory corruption vulnerabilities. In order to prevent an attacker from reliably jumping to, for example, a particular exploited function in memory, ASLR randomly arranges the address space positions of key data areas of a process, including the base of the executable and the positions of the stack, heap and libraries.
 
+!!! info
+    You can disable ASLR on your computer by using this command :<br>
+    <strong>echo 0 | sudo tee /proc/sys/kernel/randomize_va_space</strong>
+
 ## FORTIFY_SOURCE
 
 The GNU Compiler Collection has a FORTIFY_SOURCE option that does automatic bounds checking of dangerous functions to prevent simple buffer overflows. The FORTIFY_SOURCE code will do static and dynamic checks on buffer sizes to prevent these buffer overflows.
