@@ -74,6 +74,14 @@ vuln: ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), dynamically link
 
 The goal of this challenge is to call the **win** function with the two arguments, **0xDEADBEEF** and **0xDEADC0DE**. As you have probably noticed, the **vuln** function is vulnerable to a buffer overflow attack which allows us to rewrite **EIP** and thus call the **win** function. We can pass it the two required arguments using the stack as we are in 32 bits.
 
+| Stack          |
+| :------------: |
+| EIP            |
+| Return address |
+| Argument n°1   |
+| Argument n°2   |
+| ...            |
+
 ```python linenums="1"
 #!/usr/bin/env python3
 from pwn import process, p32, ELF
