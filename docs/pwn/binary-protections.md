@@ -53,7 +53,7 @@ Address space layout randomization (ASLR) is a computer security technique invol
 The GNU Compiler Collection has a FORTIFY_SOURCE option that does automatic bounds checking of dangerous functions to prevent simple buffer overflows. The FORTIFY_SOURCE code will do static and dynamic checks on buffer sizes to prevent these buffer overflows.
 
 !!! example
-    gets(buffer) would be converted to __gets_chk(buffer, sizeof(buffer)), then __gets_chk would make sure that the input does not exceed sizeof(buffer).
+    <strong>gets(buffer)</strong> would be converted to <strong>__gets_chk(buffer, sizeof(buffer))</strong>, then <strong>__gets_chk</strong> would make sure that the input does not exceed <strong>sizeof(buffer)</strong>.
 
 ### References
 
