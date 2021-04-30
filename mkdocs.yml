@@ -6,7 +6,10 @@ theme:
   icon:
     repo: fontawesome/brands/gitlab
   features:
+    - navigation.instant
     - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.top
   palette:
     - scheme: default
       primary: black
