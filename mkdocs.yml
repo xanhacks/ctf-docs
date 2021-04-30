@@ -6,7 +6,6 @@ theme:
   icon:
     repo: fontawesome/brands/gitlab
   features:
-    - navigation.instant
     - navigation.tabs
     - navigation.top
   palette:
