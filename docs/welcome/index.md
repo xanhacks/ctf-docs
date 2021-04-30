@@ -1,6 +1,6 @@
 ---
-title: Welcome to CTF Docs
-description: Cheatsheets and write ups about pentest and CTF.
+title: Welcome
+description: Welcome to CTF Docs - Cheatsheets and write ups about pentest and CTF.
 ---
 
 # Welcome to CTF Docs
