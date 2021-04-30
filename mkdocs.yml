@@ -6,6 +6,7 @@ theme:
   icon:
     repo: fontawesome/brands/gitlab
   features:
+    - navigation.instant
     - navigation.tabs
     - navigation.top
   palette:
@@ -26,7 +27,7 @@ repo_url: https://gitlab.com/xanhacks/ctf-docs
 repo_name: xanhacks/ctf-docs
 
 extra:
-  homepage: https://xanhacks.gitlab.io/ctf-docs/
+  homepage: https://xanhacks.gitlab.io/ctf-docs/welcome/
   social:
     - icon: fontawesome/brands/twitter
       link: https://twitter.com/xanhacks
