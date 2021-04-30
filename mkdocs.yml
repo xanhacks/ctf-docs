@@ -5,6 +5,8 @@ theme:
   logo: assets/img/favicon.ico
   icon:
     repo: fontawesome/brands/gitlab
+  features:
+    - navigation.tabs
   palette:
     - scheme: default
       primary: black
