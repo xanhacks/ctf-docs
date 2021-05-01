@@ -1,5 +1,5 @@
 ---
-title: 1. Calling a function with args
+title: a. Calling a function with args
 description: Exploiting a buffer overflow to call a function with specific arguments.
 ---
 
