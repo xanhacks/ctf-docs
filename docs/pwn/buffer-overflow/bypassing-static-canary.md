@@ -1,5 +1,5 @@
 ---
-title: a. Bypassing a Static Canary
+title: b. Bypassing a Static Canary
 description: Exploiting a buffer overflow attack by bypassing a static canary.
 ---
 
