@@ -33,7 +33,7 @@ List of devices attached
 
 [Official logcat docs](https://developer.android.com/studio/command-line/logcat)
 
-Display all log messages on specific **pid** (process id) :
+Display all log messages on a specific **pid** (process id) :
 
 ```shell
 $ adb shell ps | grep gallery
@@ -48,7 +48,7 @@ $ adb logcat --pid 3319
 05-17 05:26:06.859  3319  3319 I droid.gallery3: The ClassLoaderContext is a special shared library.
 ```
 
-Display all log messages with priority level "warning" and higher, on all tags :
+Display all log messages with priority level *warning* and higher, on all tags :
 
 ```shell
 $ adb logcat "*:W"
@@ -56,7 +56,7 @@ $ adb logcat "*:W"
 
 ## Disable APK verification
 
-- Set **verifier_verify_adb_installs** to 0.
+- Set *verifier_verify_adb_installs* to 0.
 
 ```shell
 $ adb install de.lotum.whatsinthefoto.fr.apk 
