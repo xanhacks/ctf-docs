@@ -33,6 +33,13 @@ List of devices attached
 
 [Official logcat docs](https://developer.android.com/studio/command-line/logcat)
 
+```shell
+adb logcat
+adb logcat -c               # clear current logs
+adb logcat -d > output      # Save the logcat output to a file on the local system.
+adb bugreport > output      # Dump the whole device information like dumpstate, dumpsys and logcat output.
+```
+
 Display all log messages on a specific **pid** (process id) :
 
 ```shell
@@ -54,6 +61,20 @@ Display all log messages with priority level *warning* and higher, on all tags :
 $ adb logcat "*:W"
 ```
 
+## Android version
+
+```shell
+$ adb shell getprop ro.build.version.release
+11
+```
+
+## Files Push / Pull
+
+```shell
+adb push <computer_src> <device_dst>
+adb pull <device_src> <computer_dst>
+```
+
 ## Disable APK verification
 
 - Set *verifier_verify_adb_installs* to 0.
@@ -67,3 +88,9 @@ $ adb install de.lotum.whatsinthefoto.fr.apk
 Performing Streamed Install
 Success
 ```
+
+### References
+
+- https://developer.android.com/studio/command-line/adb
+- https://www.automatetheplanet.com/adb-cheat-sheet/
+- https://gist.github.com/Pulimet/5013acf2cd5b28e55036c82c91bd56d8
