@@ -17,7 +17,7 @@ It is a client-server program that includes three components:
 
 **adb** is included in the Android SDK Platform-Tools package.
 
-## List devices
+## Basic commands
 
 ```shell
 $ adb devices 
@@ -27,6 +27,10 @@ List of devices attached
 $ adb devices -l
 List of devices attached
 192.168.56.103:5555    device product:vbox86p model:Google_Pixel_3 device:vbox86p transport_id:3
+
+$ adb -s 192.168.56.103:5555 shell
+$ adb –d shell                        # only attached USB device
+$ adb –e shell                        # only attached emulator
 ```
 
 ## Logs (logcat)

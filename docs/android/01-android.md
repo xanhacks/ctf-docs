@@ -39,6 +39,15 @@ description: Android must-known.
     **x86_64**: compiled code for x86_64 processors<br>
     **mips**: compiled code for MIPS processors<br>
 
+## Android structure
+
+```
+/data/data/<package>/               : Application data
+/data/data/<package>/databases      : Application databases
+/data/data/<package>/shared_prefs/  : Application shared preferences
+/data/app                           : Apk installed by user
+/system/app                         : Pre-installed APK files
+```
 
 ### References
 
