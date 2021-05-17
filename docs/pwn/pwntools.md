@@ -1,9 +1,9 @@
 ---
-title: Pwntools cheatsheets
-description: Pwntools cheatsheets with examples.
+title: Pwntools cheatsheet
+description: Pwntools cheatsheet with examples.
 ---
 
-# Pwntools cheatsheets
+# Pwntools cheatsheet
 
 ![pwntools logo](https://github.com/Gallopsled/pwntools/blob/stable/docs/source/logo.png?raw=true)
 
