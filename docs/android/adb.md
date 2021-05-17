@@ -8,6 +8,7 @@ description: adb cheatsheet with examples.
 [adb](https://developer.android.com/studio/command-line/adb) is a versatile command-line tool that lets you communicate with a device. The adb command facilitates a variety of device actions, such as installing and debugging apps, and it provides access to a Unix shell that you can use to run a variety of commands on a device.
 
 It is a client-server program that includes three components:
+
 - A **client**, which sends commands. The client runs on your development machine. You can invoke a client from a command-line terminal by issuing an adb command.
 
 - A **daemon** (adbd), which runs commands on a device. The daemon runs as a background process on each device.
@@ -16,7 +17,46 @@ It is a client-server program that includes three components:
 
 **adb** is included in the Android SDK Platform-Tools package.
 
-## Disable APK verification (verifier_verify_adb_installs)
+## List devices
+
+```shell
+$ adb devices 
+List of devices attached
+192.168.56.103:5555     device
+
+$ adb devices -l
+List of devices attached
+192.168.56.103:5555    device product:vbox86p model:Google_Pixel_3 device:vbox86p transport_id:3
+```
+
+## Logs (logcat)
+
+[Official logcat docs](https://developer.android.com/studio/command-line/logcat)
+
+Display all log messages on specific **pid** (process id) :
+
+```shell
+$ adb shell ps | grep gallery
+u0_a100       3319   287 1385884 115136 ep_poll      f277dbb9 S com.android.gallery3d
+$ adb logcat --pid 3319
+--------- beginning of main
+05-17 05:26:06.685  3319  3319 I Zygote  : seccomp disabled by setenforce 0
+05-17 05:26:06.689  3319  3319 W droid.gallery3: Unexpected CPU variant for X86 using defaults: x86
+05-17 05:26:06.854  3319  3319 D ApplicationLoaders: Returning zygote-cached class loader: /system/framework/android.hidl.base-V1.0-java.jar
+05-17 05:26:06.854  3319  3319 D ApplicationLoaders: Returning zygote-cached class loader: /system/framework/android.hidl.manager-V1.0-java.jar
+05-17 05:26:06.854  3319  3319 D ApplicationLoaders: Returning zygote-cached class loader: /system/framework/android.hidl.base-V1.0-java.jar
+05-17 05:26:06.859  3319  3319 I droid.gallery3: The ClassLoaderContext is a special shared library.
+```
+
+Display all log messages with priority level "warning" and higher, on all tags :
+
+```shell
+$ adb logcat "*:W"
+```
+
+## Disable APK verification
+
+- Set **verifier_verify_adb_installs** to 0.
 
 ```shell
 $ adb install de.lotum.whatsinthefoto.fr.apk 
