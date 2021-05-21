@@ -33,6 +33,18 @@ $ adb –d shell                        # only attached USB device
 $ adb –e shell                        # only attached emulator
 ```
 
+## Install / Run an application
+
+```shell
+$ adb install sieve.apk
+Performing Push Install
+sieve.apk: 1 file pushed, 0 skipped. 179.8 MB/s (367886 bytes in 0.002s)
+        pkg: /data/local/tmp/sieve.apk
+Success
+$ adb shell am start -n com.mwr.example.sieve/com.mwr.example.sieve.MainLoginActivity
+Starting: Intent { cmp=com.mwr.example.sieve/.MainLoginActivity }
+```
+
 ## Logs (logcat)
 
 [Official logcat docs](https://developer.android.com/studio/command-line/logcat)
