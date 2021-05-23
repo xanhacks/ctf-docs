@@ -44,7 +44,7 @@ Success
 $ adb shell am start -n com.mwr.example.sieve/com.mwr.example.sieve.MainLoginActivity
 Starting: Intent { cmp=com.mwr.example.sieve/.MainLoginActivity }
 
-$ adb shell am start -a com.example.ACTION_NAME -n com.package.name/com.package.name.ActivityName 
+$ adb shell am start -a com.example.ACTION_NAME -n com.package.name/com.package.name.ActivityName
 ```
 
 ## Logs (logcat)
