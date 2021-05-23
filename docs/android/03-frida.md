@@ -58,6 +58,8 @@ generic_x86_arm:/data/local/tmp #
 
 ## frida-trace
 
+[frida-trace](https://frida.re/docs/frida-trace/) is a tool for dynamically tracing function calls. 
+
 ```shell
 $ adb devices
 List of devices attached
