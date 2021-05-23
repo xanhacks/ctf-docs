@@ -55,3 +55,22 @@ generic_x86_arm:/data/local/tmp # ./frida-server-14.2.18-android-x86 &
 [1] 9162
 generic_x86_arm:/data/local/tmp #
 ```
+
+## frida-trace
+
+```shell
+$ adb devices
+List of devices attached
+192.168.119.88:5555     device
+emulator-5554   device
+
+$ frida-ps -D emulator-5554 -a | grep chrome
+9214  Chrome                                 com.android.chrome
+$ frida-trace -D emulator-5554 --attach-pid=9214 -i "Java_*"
+Instrumenting...
+Java_sun_nio_fs_LinuxWatchService_poll: Auto-generated handler at ".../Java_sun_nio_fs_LinuxWatchService_poll.js"
+Java_java_io_ObjectOutputStream_doublesToBytes: Auto-generated handler at ".../Java_java_io_ObjectOutputStream__ae2f5089.js"
+Java_java_io_UnixFileSystem_list0: Auto-generated handler at ".../Java_java_io_UnixFileSystem_list0.js"
+Java_sun_nio_ch_EPoll_eventsOffset: Auto-generated handler at ".../Java_sun_nio_ch_EPoll_eventsOffset.js"
+...
+```
