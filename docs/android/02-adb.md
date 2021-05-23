@@ -93,6 +93,15 @@ adb push <computer_src> <device_dst>
 adb pull <device_src> <computer_dst>
 ```
 
+## List packages
+
+```shell
+$ adb shell pm list packages
+...
+$ adb -s emulator-5554 shell pm list packages | grep "chrome"
+package:com.android.chrome
+```
+
 ## Disable APK verification
 
 - Set *verifier_verify_adb_installs* to 0.
