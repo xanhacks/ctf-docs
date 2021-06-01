@@ -8,7 +8,7 @@ description: How to root an emulator from AVD (Android Virtual Device).
 !!! warning
     Pick any image that does NOT say **Google Play** in the target column.
 
-![Your virtual devices](/assets/img/android/your_virtual_devices.png)
+![Your virtual devices]({{ base_url }}/assets/img/android/your_virtual_devices.png)
 
 You can now close *android-studio*.
 
