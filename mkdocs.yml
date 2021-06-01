@@ -44,6 +44,8 @@ markdown_extensions:
   - meta
   - admonition
   - def_list
+
+plugins:
   - macros
 
 extra_javascript:
