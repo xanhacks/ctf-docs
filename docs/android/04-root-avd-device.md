@@ -6,7 +6,7 @@ description: How to root an emulator from AVD (Android Virtual Device).
 1. Create a new virtual device on AVD.
 
 !!! warning
-    Pick any image that does NOT say **Google Play** in the target column.
+    Pick any image that does NOT say **Play Store** in the target column.
 
 ![Your virtual devices]({{ base_url }}/assets/img/android/your_virtual_devices.png)
 
