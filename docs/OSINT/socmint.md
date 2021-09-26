@@ -11,6 +11,13 @@ SOCMINT includes monitoring of content, such as messages or images posted, and o
 
 > Source [privacyinternational.org](https://www.privacyinternational.org/explainer/55/social-media-intelligence).
 
+## Dork
+
+### View tweets of suspended Twitter account
+
+1. Visit [google.com](https://google.com)
+2. Search for `cache:https://twitter.com/elonmusk`.
+
 ## Tools
 
 ### Enumeration
