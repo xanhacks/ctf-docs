@@ -21,4 +21,8 @@ I recommend you to use one of the following gdb plugins, it will simplify your d
 
 ```shell
 gef➤  r <<< $(python2 -c "print '\xb2\x91\x04\x08'")
+
+or
+
+gef➤  r < payload.txt
 ```

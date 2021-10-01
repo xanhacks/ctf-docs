@@ -14,7 +14,7 @@ Exploiting a buffer overflow attack with a static canary.
 ### Statement
 
 !!! note ""
-    Challenge : CanaRy from PicoCTF 2019.
+    Challenge : `CanaRy` from PicoCTF 2019.
 
 This time we added a canary to detect buffer overflows. Can you still find a way to retrieve the flag from this program.
 

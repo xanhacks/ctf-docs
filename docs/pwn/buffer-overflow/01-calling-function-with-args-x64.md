@@ -1,6 +1,6 @@
 ---
-title: Calling a function with args
-description: Exploiting a buffer overflow to call a function with specific arguments.
+title: Call a function with arguments - 32 bits 
+description: Exploiting a buffer overflow to call a function with specific arguments in 32 bits architecture.
 ---
 
 # Buffer Overflow - Calling a function with args
@@ -14,7 +14,7 @@ Exploiting a buffer overflow to call a function with specific arguments.
 ### Statement
 
 !!! note ""
-    Challenge : buffer overflow 2 from PicoCTF 2018.
+    Challenge : `buffer overflow 2` from PicoCTF 2018.
 
 Alright, this time you’ll need to control some arguments. Can you get the flag from this program?
 
