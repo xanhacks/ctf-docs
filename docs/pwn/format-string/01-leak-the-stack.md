@@ -150,7 +150,7 @@ FLAG{gg}
 
 ---
 
-The other way to solve this challenge is using bruteforce :
+The other way to solve this challenge is by using bruteforce to leak all the stack until we get the flag :
 
 Source code (solve.py) :
 
