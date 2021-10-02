@@ -27,6 +27,7 @@ The function **prologue** is a few lines of code at the beginning of a function,
 ### Prologue
 
 **Goal :**
+
 1. Pushes current base pointer onto the stack, so it can be restored later.
 2. Assigns the value of base pointer to the address of stack pointer (which is pointed to the top of the stack) so that the base pointer will point to the top of the stack.
 3. Moves the stack pointer further by decreasing or increasing its value, depending on whether the stack grows down or up. On x86, the stack pointer is decreased to make room for the function's local variables.
@@ -40,6 +41,7 @@ sub	esp, N
 ### Epilogue
 
 **Goal :**
+
 1. Drop the stack pointer to the current base pointer, so room reserved in the prologue for local variables is freed.
 2. Pops the base pointer off the stack, so it is restored to its value before the prologue.
 3. Returns to the calling function, by popping the previous frame's program counter off the stack and jumping to it.
