@@ -1,9 +1,9 @@
 ---
-title: Leak all the stack
-description: Leak all the stack using a format string attack.
+title: Leak the stack
+description: Leak the stack using a format string attack.
 ---
 
-# Format string - Leak all the stack
+# Format string - Leak the stack
 
 ## Summary
 
