@@ -13,7 +13,7 @@ description: Calling conventions, stacks, insctructions, ...
 
 ## Stack
 
-```assembly
+```asm
 ebp	; Pointer to the start of the current stack-frame.
 esp ; Pointer to the end of the stack
 ```
@@ -32,7 +32,7 @@ The function **prologue** is a few lines of code at the beginning of a function,
 2. Assigns the value of base pointer to the address of stack pointer (which is pointed to the top of the stack) so that the base pointer will point to the top of the stack.
 3. Moves the stack pointer further by decreasing or increasing its value, depending on whether the stack grows down or up. On x86, the stack pointer is decreased to make room for the function's local variables.
 
-```assembly
+```asm
 push ebp
 mov	ebp, esp
 sub	esp, N
@@ -46,13 +46,13 @@ sub	esp, N
 2. Pops the base pointer off the stack, so it is restored to its value before the prologue.
 3. Returns to the calling function, by popping the previous frame's program counter off the stack and jumping to it.
 
-```assembly
+```asm
 leave
 ret
 ```
 
 `leave` is a shortcut for :
-```assembly
+```asm
 mov	esp, ebp
 pop	ebp
 ```
@@ -72,7 +72,7 @@ The program’s stack is used to pass all the parameters to the function.
 
 Example with a third arguments function :
 
-```assembly
+```asm
 push <third_argument>
 push <second_argument>
 push <first_argument>
