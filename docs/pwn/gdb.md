@@ -19,10 +19,28 @@ I recommend you to use one of the following gdb plugins, it will simplify your d
 
 ### Stdin
 
-```shell
+```bash
 gef➤  r <<< $(python2 -c "print '\xb2\x91\x04\x08'")
 
 or
 
 gef➤  r < payload.txt
+```
+
+### heap
+
+```bash
+gef➤  heap
+[!] Syntax
+heap (chunk|chunks|bins|arenas)
+gef➤  heap chunks
+Chunk(addr=0x603010, size=0x290, flags=PREV_INUSE)
+    [0x0000000000603010     00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................]
+Chunk(addr=0x6032a0, size=0x410, flags=PREV_INUSE)
+    [0x00000000006032a0     74 6f 74 6f 0a 0a 00 00 00 00 00 00 00 00 00 00    toto............]
+Chunk(addr=0x6036b0, size=0x30, flags=PREV_INUSE)
+    [0x00000000006036b0     e0 36 60 00 00 00 00 00 00 00 00 00 00 00 00 00    .6`.............]
+Chunk(addr=0x6036e0, size=0x20, flags=PREV_INUSE)
+    [0x00000000006036e0     74 6f 74 6f 00 00 00 00 00 00 00 00 00 00 00 00    toto............]
+- Chunk(addr=0x603700, size=0x20910, flags=PREV_INUSE)  ←  top chunk
 ```
