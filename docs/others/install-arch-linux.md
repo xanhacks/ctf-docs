@@ -1,9 +1,9 @@
 ---
 title: Arch Linux installation
-description: Arch Linux installation with i3 and disk encryption.
+description: Arch Linux EFI installation with i3 and disk encryption.
 ---
 
-# Arch Linux installation (i3 & disk encryption)
+# Arch Linux EFI installation (i3 & disk encryption)
 
 ## Create a bootable USB stick
 
@@ -12,8 +12,6 @@ description: Arch Linux installation with i3 and disk encryption.
 3. Burn the ISO to a USB Stick.
 
 ## Installation
-
-Official wiki : https://wiki.archlinux.org/title/Installation_guide
 
 ### Keyboard & fonts
 
@@ -160,7 +158,111 @@ root@archiso ~ # mkdir /mnt/boot
 root@archiso ~ # mount /dev/nvme0n1p1 /mnt/boot
 ```
 
-You can replace `intel-ucode` by `amd-ucode`.
+Install essential packages (you can replace `intel-ucode` by `amd-ucode`) :
 ```
 root@archiso ~ # pacstrap /mnt base linux linix-firmware vim intel-ucode
 ```
+
+### Configure the system
+
+Generate the fstab file :
+```
+root@archiso ~ # genfstab -U >> /mnt/etc/fstab
+```
+
+```
+root@archiso ~ # arch-root /mnt
+[root@archiso /]# 
+```
+
+Timezone and clock :
+```
+[root@archiso /]# timedatectl list-timezones | grep Paris
+Europe/Paris
+[root@archiso /]# ln -sf /usr/share/zoneinfo/Europe/paris /etc/localtime
+[root@archiso /]# hwclock --systohc
+```
+
+Locale :
+```
+[root@archiso /]# sed -i "s/#en_US.UTF-8/en_US.UTF-8/g" /etc/locale.gen
+[root@archiso /]# locale-gen
+Generating locales ...
+[root@archiso /]# echo "LANG=en_US.UTF-8" > /etc/locale.conf
+[root@archiso /]# echo "KEYMAP=fr" > /etc/vconsole.conf
+```
+
+Hostname :
+```
+[root@archiso /]# echo "arch" > /etc/hostname
+[root@archiso /]# echo "127.0.0.1 localhost arch arch.localdomain" >> /etc/hosts
+[root@archiso /]# echo "::1 localhost" >> /etc/hosts
+```
+
+root passwd :
+```
+[root@archiso /]# passwd
+New password:
+Retype new password:
+```
+
+Install usefull packages :
+```
+[root@archiso /]# pacmam -S grub efibootmgr networkmanager network-manager-applet dialog wpa_supplicant mtools dosfstools base-devel linux-headers bluez bluez-utils cups xdg-utils xdg-user-dirs alsa-utils pulseaudio pulseaudio-bluetooth reflector
+```
+
+Add keymap and encrypt modules :
+```
+[root@archiso /]# vim /etc/mkinitcpio.conf
+...
+HOOKS=(base udev autodetect keyboard keymap modconf block encrypt filesystems fsck)
+...
+[root@archiso /]# mkinitcpio -p linux
+```
+
+Install and configure grub :
+```
+[root@archiso /]# grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
+[root@archiso /]# grub-mkconfig -o /boot/grub/grub.cfg
+[root@archiso /]# blkid | grep crypto_LUKS
+/dev/nvme0n1p3: UUID="89fdXXX" ...
+[root@archiso /]# vim /etc/default/grub
+...
+GRUB_CMDLINE_LINUX="cryptdevice=UUID=89fdXXX:cryptlinuxfs root=/dev/mapper/cryptlinuxfs"
+...
+[root@archiso /]# grub-mkconfig -o /boot/grub/grub.cfg
+```
+
+Enable network, bluetooth and cups services :
+```
+[root@archiso /]# systemctl enable NetworkManager
+[root@archiso /]# systemctl enable bluetooth
+[root@archiso /]# systemctl enable cups
+```
+
+Create a user :
+```
+[root@archiso /]# useraddd -mG wheel xanhacks
+[root@archiso /]# passwd xanhacks
+New password:
+Retype new password:
+[root@archiso /]# export EDITOR=vim
+[root@archiso /]# visudo
+...
+%wheel ALL=(ALL) ALL
+...
+```
+
+Exit and reboot :
+```
+[root@archiso /]# exit
+root@archiso ~ # umount -a
+root@archiso ~ # shutdown now
+```
+
+Remove the USB key and add boot option to the grub.
+
+## Ressources
+
+- [Youtube : Arch Linux: 12.2020 ISO Install With Encryption & i3](https://www.youtube.com/watch?v=SFzN6e7USGk)
+- [ArchLinux Official wiki : Installation Guide](https://wiki.archlinux.org/title/Installation_guide)
