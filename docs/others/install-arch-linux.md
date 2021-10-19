@@ -84,6 +84,7 @@ nvme0n1 ...
 ```
 
 Partitions :
+
 1. EFI system partition (size : 260M, code: ef00)
 2. Linux swap (size: 4G, code: 8200)
 3. Linux filesystem (size: the rest of the disk, code: 8300)
