@@ -208,7 +208,7 @@ Retype new password:
 
 Install usefull packages :
 ```
-[root@archiso /]# pacmam -S grub efibootmgr networkmanager network-manager-applet dialog wpa_supplicant mtools dosfstools base-devel linux-headers bluez bluez-utils cups xdg-utils xdg-user-dirs alsa-utils pulseaudio pulseaudio-bluetooth reflector
+[root@archiso /]# pacmam -S grub efibootmgr networkmanager network-manager-applet dialog wpa_supplicant mtools dosfstools base-devel linux-headers bluez bluez-utils cups xdg-utils xdg-user-dirs alsa-utils pulseaudio pulseaudio-bluetooth reflector bash-completion
 ```
 
 Add keymap and encrypt modules :
@@ -261,6 +261,25 @@ root@archiso ~ # shutdown now
 ```
 
 Remove the USB key and add boot option to the grub.
+
+Connect to a WIFI :
+```
+[xanhacks@arch ~]$ sudo nmtui
+```
+
+Set the clock :
+```
+[xanhacks@arch ~]$ sudo timedatectl set-ntp true
+[xanhacks@arch ~]$ sudo hwclock --systohc
+```
+
+Setup mirrolist to the fatest mirrors.
+```
+[xanhacks@arch ~]$ sudo reflector -c France -a 6 --sort rate --save /etc/pacman.d/mirrorlist
+[xanhacks@arch ~]$ sudo pacman -Syy
+[xanhacks@arch ~]$ sudo systemctl enable reflector.timer 
+```
+
 
 ## Ressources
 
