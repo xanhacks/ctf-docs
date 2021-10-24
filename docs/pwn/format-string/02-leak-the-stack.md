@@ -1,4 +1,5 @@
 ---
+---
 title: Leak the stack
 description: Leak the stack using a format string attack.
 ---
