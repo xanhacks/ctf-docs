@@ -7,6 +7,8 @@ description: Javascript cheatsheets for Web pentester.
 
 ## Making HTTP Requests
 
+List of forbidden headers : `Accept-Charset`, `Accept-Encoding`, `Access-Control-Request-Headers`, `Access-Control-Request-Method`, `Connection`, `Content-Length`, `Cookie`, `Cookie2`, `Date`, `DNT`, `Expect`, `Host`, `Keep-Alive`, `Origin`, `Referer`, `TE`, `Trailer`, `Transfer-Encoding`, `Upgrade`, `Via`.
+
 ### Using fetch
 
 Fetch API is not supported by all browsers, you can detect it by using this snippet :
@@ -49,9 +51,7 @@ fetch('https://api.example.com/users', {
 .catch(err => console.log(err))
 ```
 
-To send cookies to another domain, you can use `credentials: 'include'`.
-
-List of forbidden headers : `Accept-Charset`, `Accept-Encoding`, `Access-Control-Request-Headers`, `Access-Control-Request-Method`, `Connection`, `Content-Length`, `Cookie`, `Cookie2`, `Date`, `DNT`, `Expect`, `Host`, `Keep-Alive`, `Origin`, `Referer`, `TE`, `Trailer`, `Transfer-Encoding`, `Upgrade`, `Via`.
+Send a request with credentials included on both same-origin and cross-origin calls : `credentials: 'include'`.
 
 > More information on [javascript.info](https://javascript.info/fetch) and [developer.mozilla.org](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch).
 
@@ -109,5 +109,8 @@ xhr.onload = function() {
 
 xhr.send(JSON.stringify(data));
 ```
+
+!!! info
+  The XMLHttpRequest.withCredentials (`xhr.withCredentials = true;`) property is a boolean value that indicates whether or not cross-site Access-Control requests should be made using credentials such as cookies, authorization headers or TLS client certificates. Setting withCredentials has no effect on same-site requests.
 
 > More information on [developer.mozilla.org](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest).
