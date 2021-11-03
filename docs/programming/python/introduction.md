@@ -5,6 +5,41 @@ description: Introduction Python programming language
 
 # Introduction
 
+## Cmdloop
+
+Source code :
+
+```python
+#!/usr/bin/env python3
+from cmd import Cmd
+
+
+class Term(Cmd):
+    prompt = ">>> "
+
+    def default(self, args):
+        print(args)
+
+    def do_exit(self, args):
+        return True
+
+
+if __name__ == "__main__":
+    term = Term()
+    term.cmdloop()
+```
+
+Execution :
+
+```bash
+$ python3 loop.py
+>>> hello world !
+hello world !
+>>> exit
+```
+
+---
+
 ## Basic information
 
 **Wiki :**
