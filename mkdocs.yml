@@ -23,7 +23,7 @@ theme:
         icon: material/toggle-switch
         name: Switch to light mode
 
-repo_url: https://gitlab.com/xanhacks/ctf-docs
+repo_url: https://github.com/xanhacks/ctf-docs
 repo_name: xanhacks/ctf-docs
 
 extra:
