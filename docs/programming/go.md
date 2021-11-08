@@ -9,6 +9,8 @@ description: Golang example of code snippets.
 
 ### GET
 
+Source (main.go) :
+
 ```go
 package main
 
@@ -62,4 +64,32 @@ $ go run main.go -url 'http://localhost:8000'
 <html>
 <head>
 ...
+```
+
+## Cryptography
+
+### md5
+
+Source (main.go) :
+
+```go
+package main
+
+import (
+    "crypto/md5"
+    "fmt"
+)
+
+func main() {
+    buffer := []byte("helloworld")
+
+    fmt.Printf("%x", md5.Sum(buffer))
+}
+```
+
+Execution :
+
+```bash
+$ go run main.go
+fc5e038d38a57032085441e7fe7010b0
 ```
