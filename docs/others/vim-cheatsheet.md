@@ -64,3 +64,26 @@ Output :
 ```
 hello:world:!:
 ```
+
+## grep
+
+Before :
+
+```
+https://google.com/
+https://maps.google.com/
+https://example.com
+https://drive.google.com/
+```
+
+grep command :
+
+```
+:%!grep -v google\.com
+```
+
+After :
+
+```
+https://example.com
+```
