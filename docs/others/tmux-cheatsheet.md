@@ -22,6 +22,7 @@ description: Tmux shortcut combinaison and description.
 - `CTRL + B` + `}` : Move the current pane to the right.
 - `CTRL + B` + `[` : Enter in *copy* mode.
 - `CTRL` + `S` : Search text (only on *copy* mode).
+- `CTRL+B` + `s` : Select a running session.
 
 ## Configuration
 
