@@ -43,13 +43,12 @@ $$
 
 The keys for the RSA algorithm are generated in the following way:
 
-1. Choose two distinct prime numbers `p` and `q`.
+- Choose two distinct prime numbers `p` and `q`.
 
 For security purposes, the integers `p` and `q` should be chosen at random, and should be similar in magnitude but differ in length by a few digits to make factoring harder. Prime integers can be efficiently found using a primality test. `p` and `q` are kept secret.
 
-2. Compute n = pq.
-	n is used as the modulus for both the public and private keys. Its length, usually expressed in bits, is the key length.
-	n is released as part of the public key.
+- Compute n = pq.
+
 3. Compute λ(n), where λ is Carmichael's totient function. Since n = pq, λ(n) = lcm(λ(p),λ(q)), and since p and q are prime, λ(p) = φ(p) = p − 1 and likewise λ(q) = q − 1. Hence λ(n) = lcm(p − 1, q − 1).
 	λ(n) is kept secret.
 	The lcm may be calculated through the Euclidean algorithm, since lcm(a,b) = |ab|/gcd(a,b).
@@ -79,7 +78,22 @@ $$
 m \equiv c^d [n]
 $$
 
-### References
+## Attacks on RSA
+
+### Small factors
+
+`d` is secret and can be calculated very easily if you know `φ(n)`.
+ 
+ $$
+\varphi(pq) = (p - 1)(q - 1)
+$$
+$$
+n = p * q
+$$
+
+The security of RSA depends on the two factors `p` and `q`. You can bruteforce this two factors if `n` is small (< 256 bits) or use a well-known [database](http://factordb.com/).
+
+## References
 
 - https://bitsdeep.com/posts/attacking-rsa-for-fun-and-ctf-points-part-1/
 - https://en.wikipedia.org/wiki/RSA_(cryptosystem)
