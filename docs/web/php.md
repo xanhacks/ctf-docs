@@ -37,7 +37,7 @@ php://filter/read=string.toupper|string.rot13/resource=index.php
 
 ## Type juggling
 
-If you use ``===``, PHP will do a strict comparison.
+If you use `===`, PHP will do a strict comparison.
 
 ```php
 "1" == 1        True
