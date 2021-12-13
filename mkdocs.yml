@@ -27,8 +27,8 @@ repo_url: https://github.com/xanhacks/ctf-docs
 repo_name: xanhacks/ctf-docs
 
 extra:
-  homepage: https://xanhacks.gitlab.io/ctf-docs/welcome/
-  base_url: https://xanhacks.gitlab.io/ctf-docs
+  homepage: https://docs.xanhacks.xyz/
+  base_url: https://docs.xanhacks.xyz/
   social:
     - icon: fontawesome/brands/twitter
       link: https://twitter.com/xanhacks
