@@ -147,3 +147,57 @@ $ cat /opt/rockyou.txt | head -n1 | tr -d '\n' | md5sum ; cat rockyou.txt.md5 | 
 e10adc3949ba59abbe56e057f20f883e  -
 e10adc3949ba59abbe56e057f20f883e
 ```
+
+### Crack sha512-salt password
+
+Source code :
+
+```go
+package main
+
+import (
+    "crypto/sha512"
+    "fmt"
+    "bufio"
+    "log"
+    "os"
+)
+
+func hashPassword(password string, salt string) string {
+    hash := sha512.Sum512([]byte(password + salt))
+    return fmt.Sprintf("%x", hash)
+}
+
+func verifyPass(hash, salt, password string) bool {
+    resultHash := hashPassword(password, salt)
+    return resultHash == hash
+}
+
+func main() {
+    hash := "6d05358f090eea56a238af02e47d44ee5489d234810ef6240280857ec69712a3e5e370b8a41899d0196ade16c0d54327c5654019292cbfe0b5e98ad1fec71bed"
+    salt := "1c362db832f3f864c8c2fe05f2002a05"
+
+    wordlist, err := os.Open("/opt/rockyou.txt")
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    defer wordlist.Close()
+
+    scanner := bufio.NewScanner(wordlist)
+    for scanner.Scan() {
+        line := scanner.Text()
+        if verifyPass(hash, salt, line) {
+            fmt.Println(line)
+            break;
+        }
+    }
+}
+```
+
+Execution :
+
+```bash
+$ go run cracker.go
+november16
+```
