@@ -11,6 +11,10 @@ description: Arch Linux EFI installation with i3 and disk encryption.
 2. Verify the integrity of the ISO using a checksum.
 3. Burn the ISO to a USB Stick.
 
+`dd bs=4M if=path/to/archlinux-version-x86_64.iso of=/dev/sdx conv=fsync oflag=direct status=progress`
+
+4. Enable UEFI & Disable SecureBoot
+
 ## Installation
 
 ### Keyboard & fonts
@@ -132,7 +136,7 @@ nvme0n1
 Fat 32 for EFI :
 ```
 root@archiso ~ # mkfs.fat -F32 /dev/nvme0n1p1
-mkfs.fat 4.2 (2021-01-32)
+mkfs.fat 4.2 (2021-01-31)
 ```
 
 Swap :
@@ -168,7 +172,7 @@ root@archiso ~ # pacstrap /mnt base linux linix-firmware vim intel-ucode
 
 Generate the fstab file :
 ```
-root@archiso ~ # genfstab -U >> /mnt/etc/fstab
+root@archiso ~ # genfstab -U /mnt >> /mnt/etc/fstab
 ```
 
 ```
@@ -180,7 +184,7 @@ Timezone and clock :
 ```
 [root@archiso /]# timedatectl list-timezones | grep Paris
 Europe/Paris
-[root@archiso /]# ln -sf /usr/share/zoneinfo/Europe/paris /etc/localtime
+[root@archiso /]# ln -sf /usr/share/zoneinfo/Europe/Paris /etc/localtime
 [root@archiso /]# hwclock --systohc
 ```
 
