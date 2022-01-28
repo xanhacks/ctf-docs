@@ -57,7 +57,28 @@ gef➤ ni # Step one instruction, but if it is a function call, proceed until th
 gef➤ c # or 'continue', run the programm normally until we hit a breakpoint.
 ```
 
-### heap
+### Printing
+
+`x[/Nuf] expr` : examine memory.
+
+`N` : count of how many units to display.
+
+`u` : unit size; one of : `b` individual bytes, `h` halfwords (two bytes), `w` words (four bytes), `g` giant words (eight bytes)
+
+`f` : printing format, `s` null terminated string, `i` machine instructions.
+
+```bash
+gef➤  x 0x55555555513d
+0x55555555513d <main+4>:        0xc0058d48
+gef➤  x/3 0x55555555513d
+0x55555555513d <main+4>:        0xc0058d48      0x4800000e      0xe4e8c789
+gef➤  x/3b 0x55555555513d
+0x55555555513d <main+4>:        0x48    0x8d    0x05
+```
+
+
+
+### Heap
 
 ```bash
 gef➤  heap
