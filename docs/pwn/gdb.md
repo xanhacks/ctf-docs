@@ -27,6 +27,36 @@ or
 gef➤  r < payload.txt
 ```
 
+### Breakpoints
+
+```bash
+gef➤  b *main
+Breakpoint 1 at 0x1139
+gef➤  b *main+2
+Breakpoint 2 at 0x113b
+gef➤  info b
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x0000000000001139 <main>
+2       breakpoint     keep y   0x000000000000113b <main+2>
+gef➤  disable 2
+gef➤  info b
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x0000000000001139 <main>
+2       breakpoint     keep n   0x000000000000113b <main+2>
+gef➤  del 1
+gef➤  info b
+Num     Type           Disp Enb Address            What
+2       breakpoint     keep n   0x000000000000113b <main+2>
+```
+
+### Navigation
+
+```bash
+gef➤ si # Step one instruction.
+gef➤ ni # Step one instruction, but if it is a function call, proceed until the function returns.
+gef➤ c # or 'continue', run the programm normally until we hit a breakpoint.
+```
+
 ### heap
 
 ```bash
