@@ -10,3 +10,11 @@ description: Others.
 ```bash
 $ iconv -f ISO-8859-1 -t UTF-8 rockyou.txt > rockyou_utf8.txt
 ```
+
+## Edit binary file
+
+```
+$ xxd -ps binary > binary.hex
+$ vim binary.hex
+$ xxd -r -ps binary.hex
+```
