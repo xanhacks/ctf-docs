@@ -26,6 +26,7 @@ $ find / -perm /4000 -user root -type f -newermt '28 jul 2018 00:00:00' ! -newer
  13500615     64 -rwsr-xr-x   1 root     root        63568 Jan 10  2019 /bin/su
  13500597     52 -rwsr-xr-x   1 root     root        51280 Jan 10  2019 /bin/mount
  13500622     36 -rwsr-xr-x   1 root     root        34888 Jan 10  2019 /bin/umount
+$ find . -newermt '2022-02-10' 2>/dev/null
 ```
  
  Find files of a specific user with a name that match a regex.
