@@ -1,13 +1,11 @@
 ---
-title: Bug bounty
+title: Easy reports
 description: Bug bounty tips.
 ---
 
-# Bug bounty
+# Easy reports
 
-## Easy reports
-
-### Sensitive information leak via Referrer header
+## Sensitive information leak via Referrer header
 
 Sensitive information (ex: password reset token) leak via Referrer header
 
@@ -22,7 +20,7 @@ Example :
 
 Source : [book.hacktricks.xyz](https://book.hacktricks.xyz/pentesting-web/reset-password)
 
-### nOtWASP bottom 10: vulnerabilities that make you cry
+## nOtWASP bottom 10: vulnerabilities that make you cry
 
 1. Autocomplete=off not set
 2. Missing httponly flag

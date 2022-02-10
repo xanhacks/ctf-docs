@@ -20,6 +20,19 @@ SOCMINT includes monitoring of content, such as messages or images posted, and o
 
 ## Tools
 
+### Tracking
+
+On Twitter, you can change your `@username` as many times as you like but your ID will remain the same. So, if you have someone ID, you can track his account even if they change their username.
+
+`@username` to Twitter ID :
+
+- Enter the username on this website https://tweeterid.com/.
+
+Twitter ID to `@username` :
+
+- https://twitter.com/intent/user?user_id=<TWITTER_ID>
+- Example with `@elonmusk` : https://twitter.com/intent/user?user_id=44196397
+
 ### Enumeration
 
 - [https://whatsmyname.app/](https://whatsmyname.app/) - This tool allows you to enumerate usernames across many websites.
