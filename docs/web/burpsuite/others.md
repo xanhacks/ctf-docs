@@ -1,6 +1,6 @@
 ---
-title: Burpsuite
-description: Burpsuite cheatsheet
+title: Others
+description: Others burpsuite tips
 ---
 
 # Burpsuite
