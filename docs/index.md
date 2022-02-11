@@ -7,11 +7,24 @@ description: Welcome to CTF Docs - Cheatsheets and write ups about pentest and C
 
 ## Introduction
 
-In this website, you will find awesome **cheatsheets** about tools I use during pentest and CTF. Moreover, you will find plenty of **CTF write ups** sorted by difficulty.
+On this documentation website, you will find resources (cheatsheets, methodology, CTF write ups, ...) on the following topics :
+
+- Android
+- Crypto
+- Malware
+- OSINT
+- Pentest
+- Pwn (binary exploitation)
+- Reverse engineering
+- Web
+- ...
 
 !!! note ""
     The documentation is constantly evolving so do not forget to **bookmark this website**.
 
 ## Whoami
 
-French student passionate about infosec (social links on the footer of the page).
+Infosec french student.
+
+- :fontawesome-brands-twitter: : [@xanhacks](https://twitter.com/xanhacks)
+- :material-web: : [xanhacks.xyz](https://www.xanhacks.xyz)
