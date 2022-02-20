@@ -166,3 +166,29 @@ gvfs-fuse-daemon /home/alice/.gvfs fuse.gvfs-fuse-daemon rw,nosuid,nodev,user=al
 ```
  
  > Source [Wikipedia](https://en.wikipedia.org/wiki/Mtab).
+
+ ## Signals
+
+- **SIGHUP** (1) : Hang up detected on controlling terminal or death of controlling process
+- **SIGINT** (2) : Issued if the user sends an interrupt signal (Ctrl + C)
+- **SIGQUIT** (3) : Issued if the user sends a quit signal (Ctrl + D)
+- **SIGFPE** (8) : Issued if an illegal mathematical operation is attempted
+- **SIGKILL** (9) : If a process gets this signal it must quit immediately and will not perform any clean-up operations
+- **SIGALRM** (14): Alarm clock signal (used for timers)
+- **SIGTERM** (15) : Software termination signal, allow the process to do some cleanup tasks beforehand (sent by kill by default)
+
+## Namespaces
+
+A [namespace](https://man7.org/linux/man-pages/man7/namespaces.7.html) wraps a global system resource in an abstraction that makes it appear to the processes within the namespace that they have their own isolated instance of the global resource.  Changes to the global resource are visible to other processes that are members of the namespace, but are invisible to other processes.
+
+**Types of namespaces :**
+
+1. **Cgroup** (CLONE_NEWCGROUP) : Cgroup root directory.
+2. **IPC** (CLONE_NEWIPC) : System V ICP, POSIX message queues
+3. **Network** (CLONE_NEWNET) : Network devices, stacks, ports, ...
+4. **Mount** (CLONE_NEWNS) : Mount points
+5. **PID** (CLONE_NEWPID) : Process IDs
+6. **User** (CLONE_NEWUSER) : Boot and monotonic clocks
+7. **UTS** (CLONE_NEWUTS) : Hostname and NIS domain name
+
+List namespaces using `lsns` command.
