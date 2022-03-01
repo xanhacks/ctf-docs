@@ -165,7 +165,7 @@ root@archiso ~ # mount /dev/nvme0n1p1 /mnt/boot
 
 Install essential packages (you can replace `intel-ucode` by `amd-ucode`) :
 ```
-root@archiso ~ # pacstrap /mnt base linux linix-firmware vim intel-ucode
+root@archiso ~ # pacstrap /mnt base linux linux-firmware vim intel-ucode
 ```
 
 ### Configure the system
@@ -176,7 +176,7 @@ root@archiso ~ # genfstab -U /mnt >> /mnt/etc/fstab
 ```
 
 ```
-root@archiso ~ # arch-root /mnt
+root@archiso ~ # arch-chroot /mnt
 [root@archiso /]# 
 ```
 
