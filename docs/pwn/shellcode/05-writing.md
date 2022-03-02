@@ -97,3 +97,6 @@ The downside of adding more iterations is that the shellcode size increases ever
 
 - `-s <int>` : Maximum size of the shellcode (in bytes)
 
+## References
+
+- [Github - voydstack/shellcoding](https://github.com/voydstack/shellcoding)
