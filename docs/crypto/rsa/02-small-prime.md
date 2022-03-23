@@ -7,7 +7,7 @@ description: RSA - Attack on small prime.
 
 ## Introduction
 
-`d` (private exponent) can be calculated very easily if you know `φ(n)`. To calculate `φ(n)`, you need to find the two prime factors `p` and `q` of `n`.
+`d` (private exponent) can be calculated very easily if you know `φ(n)`. To calculate `φ(n)`, you need to find the two prime factors `p` and `q`.
 
 $$
 n = p * q
@@ -87,4 +87,4 @@ d = 173465855145593
 m = b's3cr3t'
 ```
 
-The attacker successfully recovers the `privKey(n, d)` and the ciphertext message.
+The attacker successfully recovers the `privKey(n, d)` and the plaintext message.
