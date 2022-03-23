@@ -7,7 +7,7 @@ description: RSA - Attack on small prime.
 
 ## Introduction
 
-$d$ (private exponent) can be calculated very easily if you know $\varphi(n)$. To calculate $\varphi(n)$, you need to find the two prime factors $p$ and $q$ of $n$.
+`d` (private exponent) can be calculated very easily if you know `φ(n)`. To calculate `φ(n)`, you need to find the two prime factors `p` and `q` of `n`.
 
 $$
 n = p * q
@@ -19,11 +19,11 @@ $$
 d * e \equiv 1 [\varphi(n))]
 $$
 
-If $n$ is small (< 256 bits) you can bruteforce $p$ and $q$, or you can use a well-known database like [factordb](http://factordb.com/) which contains a lot of factors.
+If `n` is small (< 256 bits) you can bruteforce `p` and `q`, or you can use a well-known database like [factordb](http://factordb.com/) which contains a lot of factors.
 
 ## Practical example
 
-The victim generates a $pubKey(n, e)$ and a $privKey(n, d)$, then encrypt a secret message.
+The victim generates a `pubKey(n, e)` and a `privKey(n, d)`, then encrypt a secret message.
 
 Source code :
 
@@ -53,7 +53,7 @@ Encrypted = 189766109539025
 
 ---
 
-The attacker only have access to the $pubKey(n, e)$ of the victim. He will try to recover the $privKey(n, d)$ of the victim by factoring $n$ with the help of `factordb`.
+The attacker only have access to the victim's `pubKey(n, e)`. He will try to recover the victim's `privKey(n, d)` by factoring `n` with the help of `factordb`.
 
 Source code :
 
@@ -87,4 +87,4 @@ d = 173465855145593
 m = b's3cr3t'
 ```
 
-The attacker successfully recovers the $privKey(n, d)$ and the ciphertext message.
+The attacker successfully recovers the `privKey(n, d)` and the ciphertext message.

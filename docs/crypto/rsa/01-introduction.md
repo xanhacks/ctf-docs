@@ -11,7 +11,7 @@ The strength of RSA relies on the fact that you need to factor `n` to obtain `d`
 
 ## Introduction
 
-RSA is an **asymmetric** cipher. The **public key** contains `n` and `e`, $pubKey(n, e)$, and the **private key** contains `n` and `d`, $privKey(n, d)$.
+RSA is an **asymmetric** cipher. The **public key** contains `n` and `e`, `pubKey(n, e)`, and the **private key** contains `n` and `d`, `privKey(n, d)`.
 
 - `p` and `q` are two large random primes that validate the following equation :
 
