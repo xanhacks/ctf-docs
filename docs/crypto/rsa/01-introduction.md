@@ -35,6 +35,9 @@ $$
 $$
 d * e \equiv 1 [\varphi(n))]
 $$
+$$
+d \equiv invmod(e) [\varphi(n))]
+$$
 
 - `m` (plaintext) must verify (otherwise it will be trim by the modulus) :
 
