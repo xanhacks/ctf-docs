@@ -18,3 +18,18 @@ $ xxd -ps binary > binary.hex
 $ vim binary.hex
 $ xxd -r -ps binary.hex
 ```
+
+## Self-signed HTTPs certificates
+
+openssl command :
+
+```bash
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout cert.key -out cert.crt
+```
+
+nginx config :
+
+```
+    ssl_certificate /etc/nginx/certs/cert.crt;
+	ssl_certificate_key /etc/nginx/certs/cert.key;
+```
