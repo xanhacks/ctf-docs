@@ -1,9 +1,9 @@
 ---
-title: Attack on small prime
+title: Small primes
 description: RSA - Attack on small prime.
 ---
 
-# Attack on small prime
+# Attack on small primes (p & q)
 
 ## Introduction
 
@@ -21,7 +21,7 @@ $$
 
 If `n` is small (< 256 bits) you can bruteforce `p` and `q`, or you can use a well-known database like [factordb](http://factordb.com/) which contains a lot of factors.
 
-## Practical example
+## Example
 
 The victim generates a `pubKey(n, e)` and a `privKey(n, d)`, then encrypt a secret message.
 

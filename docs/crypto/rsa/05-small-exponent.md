@@ -1,9 +1,9 @@
 ---
-title: Attack on a small exponent
+title: Very small exponent
 description: RSA - Attack using small exponent
 ---
 
-# Attack on a small exponent (e)
+# Attack on a very small public exponent (e)
 
 ## Introduction
 
