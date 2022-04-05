@@ -17,7 +17,7 @@ If `e` is very small, you can do a root of n-th degree on `c` to find `m`.
 
 ## Example
 
-> Write-up from `BreizhCTF 2022` challenge.
+> Write-up for the challenge `BreizhCTF2023` from `BreizhCTF 2022`.
 
 We have two files, a `ciphertext` and a `public key`.
 

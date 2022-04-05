@@ -45,7 +45,7 @@ $$q = \frac{- x - \sqrt{delta}}{2 * -1}$$
 
 ## Example
 
-> Write-up from `picoCTF 2022` challenge.
+> Write-up for the challenge `Sum-O-Primes` from `picoCTF 2022`.
 
 Source code :
 
