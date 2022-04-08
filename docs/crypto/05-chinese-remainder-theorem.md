@@ -18,23 +18,25 @@ For example, if we know that the remainder of `n` divided by 3 is 2, the remaind
 Let's solve this system :
 
 $$
-\begin{equation}
-    \begin{cases}
-        x \equiv 2 [3]\\
-        x \equiv 3 [5]\\
-        x \equiv 2 [7]\\
-    \end{cases}\\
-\end{equation}
+x \equiv 2 [3]
+$$
+$$
+x \equiv 3 [5]
+$$
+$$
+x \equiv 2 [7]
 $$
 
+Or :
+
 $$
-\begin{equation}
-    \begin{cases}
-        x = 7 \times j_{1} + 2\\
-        x = 5 \times j_{2} + 3\\
-        x = 3 \times j_{3} + 2\\
-    \end{cases}\\
-\end{equation}
+x = 7 \times j_{1} + 2
+$$
+$$
+x = 5 \times j_{2} + 3
+$$
+$$
+x = 3 \times j_{3} + 2
 $$
 
 Let's solve the first equation :
@@ -88,11 +90,8 @@ $$
 In conclusion :
 
 $$
-\begin{equation}
-    x =
-    \begin{cases}
-        23, & \text{if}\ x < 105\\
-        \equiv 23 [105], & \text{ otherwise}\\
-    \end{cases}\\
-\end{equation}
+x = 23\ \text{if}\ x < 105
+$$
+$$
+x \equiv 23 [105] \text{ otherwise}
 $$
