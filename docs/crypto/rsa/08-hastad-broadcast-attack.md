@@ -65,7 +65,7 @@ def mul(lst):
         ret *= n
     return ret
 
-def ctr(C, N):
+def crt(C, N):
     assert len(C) == len(N)
 
     total = 0
@@ -108,7 +108,7 @@ N = [n1, n2, n3]
 for c in C:
     third_root(c)
 
-x = ctr(C, N)
+x = crt(C, N)
 third_root(x)
 ```
 
