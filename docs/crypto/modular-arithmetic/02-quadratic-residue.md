@@ -22,25 +22,24 @@ The **Legendre symbol** is a multiplicative function that returns (`p` must be a
 - **0** : `a ≡ 0 mod p`
 
 ```python
->>> def legendre_symbol(a, p):
-...     from Crypto.Util.number import isPrime
-...     assert isPrime(p) and p % 2 == 1, "'p' must be a prime odd"
-...     res = pow(a, (p - 1) // 2, p)
-...     return res - p if res > 1 else res
-...
+from Crypto.Util.number import isPrime
 
->>> legendre_symbol(a=12, p=145)
+
+def legendre_symbol(a, p):
+    assert isPrime(p) and p % 2 == 1, "'p' must be a prime odd"
+    res = pow(a, (p - 1) // 2, p)
+    return res - p if res > 1 else res
+
+
+print(legendre_symbol(a=12, p=839)) # 12 ≢ 0 mod 839
+print(legendre_symbol(a=2, p=5))
+print(legendre_symbol(a=5, p=5)) # 5 ≡ 0 mod 5
+```
+
+```
 1
-
->>> legendre_symbol(a=2, p=5)
 -1
->>> 2 % 5 != 0
-True
-
->>> legendre_symbol(a=5, p=5)
 0
->>> 5 % 5 == 0
-True
 ```
 
 ## Modular square root
