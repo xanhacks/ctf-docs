@@ -10,7 +10,7 @@ This tool allows you to inject your own scripts into black box processes. Hook a
 
 ![frida logo](https://frida.re/img/logotype.svg)
 
-## Setup
+## Frida setup
 
 **Prerequisite** : An emulator / physical Android device with root access.
 
@@ -55,6 +55,102 @@ generic_x86_arm:/data/local/tmp # ./frida-server-14.2.18-android-x86 &
 [1] 9162
 generic_x86_arm:/data/local/tmp #
 ```
+
+## Functions Hooking
+
+### Java functions
+
+> Challenge `frida-me` from `404CTF`.
+
+Example with PIN Bruteforce :
+
+```js
+let mainActivityName = "de.hallebar.secretz.MainActivity";
+let min = 0;
+let max = 99999999;
+
+console.log("Hook loaded !");
+
+Java.perform(function() {
+    let mainActivity = Java.use(mainActivityName);
+
+    mainActivity.complicatedCheckerPleaseDontReverse.overload("int").implementation = function (arg) {
+        console.log("\n[*] call complicatedCheckerPleaseDontReverse(" + arg + ")");
+
+        for (let i = min; i < max; i++) {
+            try {
+                this.complicatedCheckerPleaseDontReverse(i);
+            } catch (e) {
+                if (e == "Error: invalid string") {
+                    console.log("PIN Found : " + i);
+                    break;
+                }
+            }
+        }
+
+        return "hooked!";
+    };
+});
+```
+
+```bash
+$ frida -D emulator-5554 -l brute_pin.js -f de.hallebar.secretz --no-pause
+     ____
+    / _  |   Frida 15.1.24 - A world-class dynamic instrumentation toolkit
+   | (_| |
+    > _  |   Commands:
+   /_/ |_|       help      -> Displays the help system
+   . . . .       object?   -> Display information about 'object'
+   . . . .       exit/quit -> Exit
+   . . . .
+   . . . .   More info at https://frida.re/docs/home/
+   . . . .
+   . . . .   Connected to Android Emulator 5554 (id=emulator-5554)
+Spawning `de.hallebar.secretz`...
+Hook loaded !
+Spawned `de.hallebar.secretz`. Resuming main thread!
+[Android Emulator 5554::de.hallebar.secretz ]->
+[*] call complicatedCheckerPleaseDontReverse(1234)
+PIN Found : 1474560
+```
+
+### Native functions
+
+Find the function name in the native library :
+
+```bash
+$ nm -C --dynamic HallebardeSecretz/lib/x86/libsecretz.so | grep DecryptCBC
+0001b770 T AES::DecryptCBC(unsigned char const*, unsigned int, unsigned char const*, unsigned char const*)
+...
+
+$ nm --dynamic HallebardeSecretz/lib/x86/libsecretz.so | grep '0001b770'
+0001b770 T _ZN3AES10DecryptCBCEPKhjS1_S1_
+```
+
+hook.js :
+
+```js
+Interceptor.attach(Module.getExportByName(libName, '_ZN3AES10DecryptCBCEPKhjS1_S1_'), {
+    onEnter: function(args) {
+        console.log("[*] libsecretz.so: AES::DecryptCBC()");
+        console.log("args[0] : " + args[0]);
+        console.log(hexdump(args[0]));
+
+        console.log("args[1] : " + args[1]);
+        console.log(hexdump(args[1]));
+
+        console.log("args[2] (int32) : " + args[2].toInt32());
+        // ...
+    },
+    onLeave: function(retval) {
+        console.log("retval : " + retval);
+        console.log(hexdump(retval));
+    }
+});
+```
+
+More examples on this [blog](https://x3tb3t.github.io/2018/08/03/Frida-for-Android/).
+
 
 ## frida-trace
 
