@@ -11,7 +11,7 @@ Exploiting a buffer overflow attack with a static canary.
 
 ## Challenge
 
-### Statement
+### Description
 
 !!! note ""
     Challenge : `CanaRy` from PicoCTF 2019.
@@ -99,7 +99,7 @@ int main(int argc, char **argv){
 }
 ```
 
-## Answer
+## Writeup
 
 In the source code below, the canary is load from a text file and is only four bytes, `#define CANARY_SIZE 4`.
 

@@ -11,7 +11,7 @@ Exploiting a buffer overflow to call a function with specific arguments.
 
 ## Challenge
 
-### Statement
+### Description
 
 !!! note ""
     Challenge : `buffer overflow 2` from PicoCTF 2018.
@@ -65,7 +65,7 @@ int main(int argc, char **argv){
 }
 ```
 
-## Answer
+## Writeup
 
 ```shell
 $ file vuln
