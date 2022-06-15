@@ -100,7 +100,12 @@ Padding size: 136
 
 ---
 
-To bypass `NX`, we will use a ROPChain. To bypass `ASLR`, we will leak the address of a function (in the GOT) to calculate the base address of `libc` and call the `main` function again to executes our final payload with the right offsets. Source code :
+We have a padding of 136 ! Now, we need to bypass `NX` and `ASLR`.
+
+1. To bypass `NX`, we will use ROPChains to execute our code.
+2. To bypass `ASLR`, we will leak the address of a function (in the GOT) to calculate the base address of `libc` and call the `main` function again to executes our final payload with the right offsets.
+
+Source code :
 
 ```python
 #!/usr/bin/env python3
