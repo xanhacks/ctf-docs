@@ -5,6 +5,14 @@ description: Vim shortcut combinaison and description.
 
 # Vim - Vi IMproved
 
+## Execute current script
+
+`%` refers to the current script name.
+
+```
+!./%
+```
+
 ## sed
 
 ### Using groups
