@@ -1,6 +1,7 @@
 # CTF Docs
 
 [![pipeline status](https://gitlab.com/xanhacks/ctf-docs/badges/master/pipeline.svg)](https://gitlab.com/xanhacks/ctf-docs/-/commits/master)
+[![gitlab star](https://img.shields.io/badge/dynamic/json?color=green&label=gitlab%20stars&query=%24.star_count&url=https%3A%2F%2Fgitlab.com%2Fapi%2Fv4%2Fprojects%2F26200977)](https://gitlab.com/xanhacks/ctf-docs)
 [![github star](https://img.shields.io/github/stars/xanhacks/ctf-docs.svg?style=social&label=Star)](https://github.com/xanhacks/ctf-docs)
 
 Documentation and cheatsheets about CTF and pentest.
