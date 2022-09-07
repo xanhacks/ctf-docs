@@ -16,13 +16,13 @@ theme:
       primary: black
       accent: red
       toggle:
-        icon: material/toggle-switch-off-outline
+        icon: material/brightness-7 
         name: Switch to dark mode
     - scheme: slate
       primary: black
       accent: red
       toggle:
-        icon: material/toggle-switch
+        icon: material/brightness-auto
         name: Switch to light mode
 
 repo_url: https://github.com/xanhacks/ctf-docs
