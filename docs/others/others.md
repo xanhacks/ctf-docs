@@ -33,3 +33,20 @@ nginx config :
     ssl_certificate /etc/nginx/certs/cert.crt;
 	ssl_certificate_key /etc/nginx/certs/cert.key;
 ```
+
+## Certbot - Let's Encrypt
+
+```
+$ sudo apt install -y python3-certbot-nginx
+$ certbot -d domain.com --manual --preferred-challenges dns certonly
+[...]
+Ask for TXT DNS entry
+
+$ dig TXT _acme-challenge.domain.com
+[...]
+_acme-challenge.domain.com. 3585 IN TXT  "8E5TrjR230ThxG2RntJYnaJcslXOx5DsDki40T11_GU"
+
+cd /etc/letsencrypt/archive/domain.com
+$ ls
+cert1.pem  chain1.pem  fullchain1.pem  privkey1.pem
+```
