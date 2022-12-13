@@ -3,7 +3,7 @@
 
 ## Definition
 
-A **Host header attack** is a type of cyber attack in which an attacker manipulates the Host header of a request in order to trick a web server into thinking the request is coming from a different website. This can allow the attacker to access resources or information that they would not normally have access to, or to perform actions on the targeted website that they would not normally be able to do. The Host header is a field in the HTTP request header that specifies the domain name of the website that the client is trying to access. By modifying this field, an attacker can direct the server to respond to their request as if it were coming from a different website.
+A **Host header attack** is a type of cyber attack in which an attacker **manipulates the Host header of a request in order to trick a web server** into thinking the request is coming from a different website. This can allow the attacker to access resources or information that they would not normally have access to, or to perform actions on the targeted website that they would not normally be able to do. The Host header is a field in the HTTP request header that specifies the domain name of the website that the client is trying to access. By modifying this field, an attacker can direct the server to respond to their request as if it were coming from a different website.
 
 ## Cheatsheet
 
