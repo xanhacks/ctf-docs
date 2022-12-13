@@ -11,9 +11,8 @@ description: Insecure deserialization cheatsheet
 
 ## Cheatsheet
 
-Java serialize : `0xACED` or `rO0` (base64)
-Ruby serialize : `\x04\bo:\vUser`
-
+- Java serialize : `0xACED` or `rO0` (base64)
+- Ruby serialize : `\x04\bo:\vUser`
 - Modify PHP attribute `O:4:"User":2:{s:8:"username";s:6:"carlos";s:7:"isAdmin";b:0;}` to `b:1`
 - Change data type for low comparaison bypass `0 == "Example string" // true`
 - Replace `avatar` path in your cookie and delete your account, the file will be delete
