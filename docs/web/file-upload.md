@@ -1,3 +1,8 @@
+---
+title: Insecure file upload
+description: Insecure file upload cheatsheet
+---
+
 # Insecure File upload
 
 ## Definition
