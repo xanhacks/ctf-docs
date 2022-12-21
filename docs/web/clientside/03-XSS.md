@@ -1,6 +1,7 @@
 ---
 title: XSS - Cross Site Scripting
 description: XSS cheatsheets, payloads and tricks.
+ignore_macros: true
 ---
 
 # XSS
