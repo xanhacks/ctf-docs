@@ -71,3 +71,13 @@ Use `--vertical` to enable the vertical format or ending query with `\G`, exampl
 ```
 
 > Source [dev.mysql.com](https://dev.mysql.com/doc/mysql-shell/8.0/en/mysql-shell-output-vertical.html).
+
+### SQL Injection in Websockets
+
+Example of command using SQLmap :
+
+```
+$ sqlmap -u "ws://soc-player.soccer.htb:9091" --data='{"id":"57636*"}'
+```
+
+Another way would be to use an HTTP server as proxy: https://rayhan0x01.github.io/ctf/2021/04/02/blind-sqli-over-websocket-automation.html
